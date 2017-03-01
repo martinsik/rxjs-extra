@@ -1,0 +1,20 @@
+diff --git a/Users/martin/git/rxjs/spec/helpers/testScheduler-ui.ts b/test/helpers/testScheduler-ui.ts
+index 0e522e6..8161a75 100644
+--- a/Users/martin/git/rxjs/spec/helpers/testScheduler-ui.ts
++++ b/test/helpers/testScheduler-ui.ts
+@@ -1,14 +1,11 @@
+-///<reference path='../../typings/index.d.ts'/>
+-///<reference path='ambient.d.ts'/>
+-
+ import * as _ from 'lodash';
+ import * as commonInterface from 'mocha/lib/interfaces/common';
+ import * as escapeRe from 'escape-string-regexp';
+ import * as chai from 'chai';
+ import * as sinonChai from 'sinon-chai';
+ 
+-import * as Rx from '../../dist/cjs/Rx';
+ import * as marble from './marble-testing';
++import * as Rx from 'rxjs';
+ 
+ //setup sinon-chai
+ chai.use(sinonChai);

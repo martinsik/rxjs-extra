@@ -1,0 +1,19 @@
+diff --git a/Users/martin/git/rxjs/spec/helpers/test-helper.ts b/test/helpers/test-helper.ts
+index 2acd0f4..96cc6df 100644
+--- a/Users/martin/git/rxjs/spec/helpers/test-helper.ts
++++ b/test/helpers/test-helper.ts
+@@ -1,10 +1,9 @@
+-///<reference path='../../typings/index.d.ts'/>
+ declare const global: any;
+ 
+-import * as Rx from '../../dist/cjs/Rx';
+-import {ObservableInput} from '../../dist/cjs/Observable';
+-import {root} from '../../dist/cjs/util/root';
+-import {$$iterator} from '../../dist/cjs/symbol/iterator';
++import * as Rx from 'rxjs';
++import {ObservableInput} from 'rxjs/Observable';
++import {root} from 'rxjs/util/root';
++import {$$iterator} from 'rxjs/symbol/iterator';
+ import $$symbolObservable from 'symbol-observable';
+ 
+ export function lowerCaseO<T>(...args): Rx.Observable<T> {

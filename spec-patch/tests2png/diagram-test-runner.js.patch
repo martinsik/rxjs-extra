@@ -1,0 +1,12 @@
+diff --git a/Users/martin/git/rxjs/spec/helpers/tests2png/diagram-test-runner.js b/test/helpers/tests2png/diagram-test-runner.js
+index 1517567..ae72bfb 100644
+--- a/Users/martin/git/rxjs/spec/helpers/tests2png/diagram-test-runner.js
++++ b/test/helpers/tests2png/diagram-test-runner.js
+@@ -1,5 +1,5 @@
+-var root = require('../../../dist/cjs/util/root').root;
+-var Rx = require('../../../dist/cjs/Rx');
++var root = require('rxjs/util/root').root;
++var Rx = require('rxjs/Rx');
+ var painter = require('./painter');
+ 
+ function getInputStreams(rxTestScheduler) {

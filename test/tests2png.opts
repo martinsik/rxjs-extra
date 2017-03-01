@@ -1,0 +1,12 @@
+--require source-map-support/register
+--require test-js/helpers/tests2png/diagram-test-runner.js
+--require test-js/helpers/testScheduler-ui.js
+--ui test-js/helpers/testScheduler-ui.js
+
+--reporter dot
+
+--full-trace
+--check-leaks
+
+--recursive
+--timeout 5000

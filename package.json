@@ -4,8 +4,18 @@
   "description": "Collection of extra operator for RxJS 5",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "fetch-test-helpers": "git remote remove rxjs && git remote add rxjs https://github.com/ReactiveX/rxjs.git && echo \"spec/helpers\" > .git/info/sparse-checkout"
+    "test": "mocha test-js",
+    "clean": "npm run spec-clean && npm run test-clean",
+    "build_test": "npm run test-build && npm run test",
+    "spec-download-helpers": "npm run spec-clean && mkdir .rxjs-spec && curl -s -L -o .rxjs-spec/rxjs.zip https://github.com/ReactiveX/rxjs/archive/5.2.0.zip && unzip -q -d .rxjs-spec/ .rxjs-spec/rxjs.zip && mv .rxjs-spec/rxjs-5.2.0/spec/helpers/* ./test/helpers && rm -rf .rxjs-spec",
+    "spec-gen-patches": "git diff ~/git/rxjs/spec/helpers/testScheduler-ui.ts test/helpers/testScheduler-ui.ts > spec-patch/testScheduler-ui.ts.patch || git diff ~/git/rxjs/spec/helpers/marble-testing.ts test/helpers/marble-testing.ts > spec-patch/marble-testing.ts.patch || git diff ~/git/rxjs/spec/helpers/test-helper.ts test/helpers/test-helper.ts > spec-patch/test-helper.ts.patch || git diff ~/git/rxjs/spec/helpers/tests2png/diagram-test-runner.js test/helpers/tests2png/diagram-test-runner.js > spec-patch/tests2png/diagram-test-runner.js.patch || exit 0",
+    "spec-apply-patches": "patch test/helpers/testScheduler-ui.ts spec-patch/testScheduler-ui.ts.patch && patch test/helpers/marble-testing.ts spec-patch/marble-testing.ts.patch && patch test/helpers/test-helper.ts spec-patch/test-helper.ts.patch && patch test/helpers/tests2png/diagram-test-runner.js spec-patch/tests2png/diagram-test-runner.js.patch",
+    "spec-clean": "rm -rf .rxjs-spec && rm -f test/helpers/*.ts && rm -fr test/helpers/tests2png",
+    "spec-setup": "npm run spec-clean && npm run spec-download-helpers && npm run spec-apply-patches",
+    "test-clean": "rm -rf test-js",
+    "test-build": "npm run test-clean && tsc -p test/tsconfig.json",
+    "test-full-rebuild": "npm run clean && npm run spec-setup && npm run test-build",
+    "tests2png": "npm run test-build && mkdir -p tmp/docs/img && mocha --opts test/tests2png.opts test-js"
   },
   "repository": {
     "type": "git",
@@ -22,7 +32,19 @@
   },
   "homepage": "https://github.com/martinsik/rxjs-extra-operators#readme",
   "devDependencies": {
+    "@types/chai": "^3.4.35",
+    "@types/lodash": "^4.14.53",
+    "@types/mocha": "^2.2.39",
+    "@types/node": "^7.0.5",
+    "@types/sinon": "^1.16.35",
+    "@types/sinon-chai": "^2.7.27",
+    "chai": "^3.5.0",
+    "color": "^1.0.3",
+    "gm": "^1.23.0",
+    "lodash": "^4.17.4",
     "mocha": "^3.2.0",
+    "sinon-chai": "^2.8.0",
+    "source-map-support": "^0.4.11",
     "typescript": "^2.2.1"
   },
   "dependencies": {
