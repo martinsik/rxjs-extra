@@ -12,5 +12,5 @@ node_modules
 .rxjs-spec
 tmp
 test-js
-test/helpers
+test/helpers/*
 !test/helpers/README.md
