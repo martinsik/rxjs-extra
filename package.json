@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha test-js",
-    "clean": "npm run spec-clean && npm run test_clean",
+    "clean": "npm run spec_clean && npm run test_clean",
     "clean_cjs": "rm -rf dist/cjs",
     "clean_test": "rm -rf test-js",
     "build_cjs": "npm run clean_cjs && tsc",
@@ -13,7 +13,7 @@
     "spec_gen_patches": "git diff ~/git/rxjs/spec/helpers/testScheduler-ui.ts test/helpers/testScheduler-ui.ts > spec-patch/testScheduler-ui.ts.patch || git diff ~/git/rxjs/spec/helpers/marble-testing.ts test/helpers/marble-testing.ts > spec-patch/marble-testing.ts.patch || git diff ~/git/rxjs/spec/helpers/test-helper.ts test/helpers/test-helper.ts > spec-patch/test-helper.ts.patch || git diff ~/git/rxjs/spec/helpers/tests2png/diagram-test-runner.js test/helpers/tests2png/diagram-test-runner.js > spec-patch/tests2png/diagram-test-runner.js.patch || exit 0",
     "spec_apply_patches": "patch test/helpers/testScheduler-ui.ts spec-patch/testScheduler-ui.ts.patch && patch test/helpers/marble-testing.ts spec-patch/marble-testing.ts.patch && patch test/helpers/test-helper.ts spec-patch/test-helper.ts.patch && patch test/helpers/tests2png/diagram-test-runner.js spec-patch/tests2png/diagram-test-runner.js.patch",
     "spec_clean": "rm -rf .rxjs-spec && rm -f test/helpers/*.ts && rm -fr test/helpers/tests2png",
-    "spec_setup": "npm run spec-clean && npm run spec-download-helpers && npm run spec_apply_patches",
+    "spec_setup": "npm run spec_clean && npm run spec_download_helpers && npm run spec_apply_patches",
     "test_build_cjs_run": "npm run build_cjs && npm run test_build_run",
     "test_build_run": "npm run test_build && npm run test",
     "test_build": "npm run clean_test && tsc -p test/tsconfig.json",

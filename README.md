@@ -1,5 +1,13 @@
+[![Build Status](https://travis-ci.org/martinsik/rxjs-plus.svg?branch=master)](https://travis-ci.org/martinsik/rxjs-plus)
+
 # rxjs-plus
 Collection of additional RxJS 5 operators
+
+# Operators
+
+## takeWhileInclusive
+
+![takeWhileInclusive](https://raw.githubusercontent.com/martinsik/rxjs-plus/master/doc/takeWhileInclusive.png "The takeWhileInclusive() operator")
 
 # Testing
 
