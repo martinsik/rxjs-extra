@@ -1,0 +1,18 @@
+language: node_js
+sudo: false
+
+cache:
+  directories:
+    - node_modules
+
+env:
+  matrix:
+  - NODE_VER=4
+  - NODE_VER=6
+  - NODE_VER=7
+
+install:
+  - npm install
+  - node -v
+  - npm -v
+  - npm run spec_setup && npm run test_build_cjs_run

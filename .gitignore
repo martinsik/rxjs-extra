@@ -14,3 +14,4 @@ tmp
 test-js
 test/helpers/*
 !test/helpers/README.md
+dist

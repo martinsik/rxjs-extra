@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es5",
+    "allowJs": false,
+    "sourceMap": true,
+    "declaration": true,
+    "outDir": "dist/cjs",
+    "lib": [
+      "es5",
+      "es2015.core",
+      "es2015.collection",
+      "es2015.iterable",
+      "es2015.promise",
+      "dom"
+    ]
+  },
+  "exclude": [
+    "test",
+    "node_modules"
+  ]
+}

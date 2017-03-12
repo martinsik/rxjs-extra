@@ -31,11 +31,11 @@ class TakeWhileInclusiveSubscriber<T> extends Subscriber<T> {
     }
 
     if (Boolean(result)) {
+      this.destination.next(value);
+    } else {
       const destination = this.destination;
       destination.next(value);
       destination.complete();
-    } else {
-      this.destination.next(value);
     }
   }
 }
