@@ -1,5 +1,5 @@
 diff --git a/Users/martin/git/rxjs/spec/helpers/marble-testing.ts b/test/helpers/marble-testing.ts
-index 8b3c6a9..fffeaf2 100644
+index 9c0cee5..5716348 100644
 --- a/Users/martin/git/rxjs/spec/helpers/marble-testing.ts
 +++ b/test/helpers/marble-testing.ts
 @@ -1,9 +1,8 @@
@@ -17,10 +17,3 @@ index 8b3c6a9..fffeaf2 100644
  
  declare const global: any;
  
-@@ -41,4 +40,4 @@ export function time(marbles: string): number {
-     throw 'tried to use time() in async test';
-   }
-   return global.rxTestScheduler.createTime.apply(global.rxTestScheduler, arguments);
--}
-\ No newline at end of file
-+}
