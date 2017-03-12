@@ -1,3 +1,0 @@
-# This is the only file from rxjs/spec/helpers with different line endings
-# The following option makes `git diff` ignore the warning
-marble-testing.ts -crlf
