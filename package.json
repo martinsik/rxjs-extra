@@ -51,6 +51,7 @@
     "normalize-newline-cli": "^1.1.0",
     "sinon-chai": "^2.8.0",
     "source-map-support": "^0.4.11",
+    "symbol-observable": "^1.0.4",
     "typescript": "^2.2.1"
   },
   "dependencies": {
