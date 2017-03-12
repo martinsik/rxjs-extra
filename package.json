@@ -45,6 +45,7 @@
     "chai": "^3.5.0",
     "color": "^1.0.3",
     "dos2unix": "^1.1.2",
+    "escape-string-regexp": "^1.0.5",
     "gm": "^1.23.0",
     "lodash": "^4.17.4",
     "mocha": "^3.2.0",
