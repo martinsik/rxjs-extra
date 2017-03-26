@@ -9,7 +9,7 @@ class TakeWhileInclusiveOperator<T> implements Operator<T, T> {
   constructor(private predicate: (value: T, index: number) => boolean) { }
 
   call(subscriber: Subscriber<T>, source: any) {
-    source.subscribe(new TakeWhileInclusiveSubscriber(subscriber, this.predicate));
+    return source.subscribe(new TakeWhileInclusiveSubscriber(subscriber, this.predicate));
   }
 }
 
