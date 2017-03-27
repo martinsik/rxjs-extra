@@ -15,22 +15,35 @@ describe('Observable.prototype.cache', () => {
 
   function createSource() {
     let counter = 0;
-    return Observable.defer(() => Observable.of(String.fromCharCode(97 + counter))
-        .delay(10, rxTestScheduler)
-        .do(() => counter++)
-    );
+    return Observable.defer(() => cold('-(v|)', {'v': String.fromCharCode(97 + counter)}).do(() => counter++));
   }
 
-  asDiagram('cache')('should cache the items for specified time window', () => {
+  asDiagram('cache(50)')('should cache the items for 50 time window', () => {
     const source = createSource().cache(50, null, rxTestScheduler);
-    //                    -----
-    //                         -----
-    //                              -----
-    const notifier = hot('---2--3-45--6--');
+    //                  a -----
+    //                  b      -----
+    //                  c           -----
+    const notifier = hot('---1--2-34--5--');
     const expected1 =    '-a-a---bbb---c-';
 
     expectObservable(source.repeatWhen(() => notifier)).toBe(expected1);
-    // expectSubscriptions(source.subscriptions).toBe(sub);
+  });
+
+  it('should propagate the error when source emits error by default', () => {
+    const err = new Error();
+    const source = createSource()
+        .map(item => {
+          if (item === 'b') {
+            throw err;
+          }
+          return item;
+        })
+        .cache(50, null, rxTestScheduler);
+
+    const notifier = hot('------1-');
+    const expected1 =    '-a-----#';
+
+    expectObservable(source.repeatWhen(() => notifier)).toBe(expected1, undefined, err);
   });
 
 });
