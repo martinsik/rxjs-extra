@@ -11,6 +11,7 @@ declare const expectSubscriptions: typeof marbleTestingSignature.expectSubscript
 declare const rxTestScheduler: Rx.TestScheduler;
 const Observable = Rx.Observable;
 
+// @todo: rework these tests when RxJS supports creating multiple subscriptions as different times.
 describe('Observable.prototype.cache', () => {
 
   function createSource() {
@@ -40,10 +41,73 @@ describe('Observable.prototype.cache', () => {
         })
         .cache(50, null, rxTestScheduler);
 
+    //                  a -----
+    //                  b      -----
     const notifier = hot('------1-');
     const expected1 =    '-a-----#';
 
     expectObservable(source.repeatWhen(() => notifier)).toBe(expected1, undefined, err);
+  });
+
+  it('should send complete when requesting a single value', () => {
+    const source = cold('--(a|)');
+    const cached = source.cache(50, null, rxTestScheduler);
+    const e1 =          '--(a|)';
+    const e1sub =       '^-!';
+
+    expectObservable(cached).toBe(e1);
+    expectSubscriptions(source.subscriptions).toBe(e1sub);
+  });
+
+  it("shouldn't emit anything if the source doesn't emit", () => {
+    const source = cold('----');
+    const cached = source.cache(50, null, rxTestScheduler);
+    const e1 =          '----';
+    const e1sub =       '^---';
+
+    expectObservable(cached).toBe(e1);
+    expectSubscriptions(source.subscriptions).toBe(e1sub);
+  });
+
+  it("should emit when the source takes longer that the time window", () => {
+    const source = cold('---------a');
+    const cached = source.cache(50, null, rxTestScheduler);
+    const e1 =          '---------(a|)';
+    const e1sub =       '^--------!';
+
+    expectObservable(cached).toBe(e1);
+    expectSubscriptions(source.subscriptions).toBe(e1sub);
+  });
+
+  it("should emit the same value to multiple observers withing the same time window", () => {
+    const cached = createSource().cache(50, null, rxTestScheduler);
+    const e1 =           '-(a|)';
+    const e2 =           '-(a|)';
+    //                  a -----
+    //                  b      -----
+    const notifier = hot('------1---');
+    const e3 =           '-a-----b--';
+
+    expectObservable(cached).toBe(e1);
+    expectObservable(cached).toBe(e2);
+    expectObservable(cached.repeatWhen(() => notifier)).toBe(e3);
+  });
+
+  it("should emit the same error to multiple observers withing the same time window", () => {
+    const err = new Error();
+    const cached = createSource()
+        .map(item => {
+          if (item === 'a') {
+            throw err;
+          }
+          return item;
+        }).cache(50, null, rxTestScheduler);
+
+    const e1 =          '-#';
+    const e2 =          '-#';
+
+    expectObservable(cached).toBe(e1, undefined, err);
+    expectObservable(cached).toBe(e2, undefined, err);
   });
 
 });
