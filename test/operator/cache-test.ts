@@ -1,5 +1,6 @@
 import * as Rx from 'rxjs';
 import '../../dist/cjs/index';
+import {CacheMode, CacheOptions} from '../../dist/cjs/src/operator/cache';
 import {expect} from 'chai';
 import marbleTestingSignature = require('../helpers/marble-testing'); // tslint:disable-line:no-require-imports
 
@@ -108,6 +109,18 @@ describe('Observable.prototype.cache', () => {
 
     expectObservable(cached).toBe(e1, undefined, err);
     expectObservable(cached).toBe(e2, undefined, err);
+  });
+
+  it("should emit two items when tolerating the expired items too", () => {
+    const opts = <CacheOptions>{mode: CacheMode.TolerateExpired};
+    const source = createSource().cache(50, opts, rxTestScheduler);
+
+    //                  a -----
+    //                  b      -----
+    const notifier = hot('-------1-');
+    const expected1 =    '-a-----ab';
+
+    expectObservable(source.repeatWhen(() => notifier)).toBe(expected1);
   });
 
 });

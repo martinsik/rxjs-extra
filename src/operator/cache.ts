@@ -9,7 +9,11 @@ class CaughtError {
   constructor(public error: any) {}
 }
 
-export enum CacheMode { Default, TolerateExpired, SilentRefresh }
+export enum CacheMode {
+  Default = 1,
+  TolerateExpired,
+  SilentRefresh
+}
 
 export type CacheOptions = {
   catchErrors?: boolean,
@@ -30,7 +34,7 @@ export function cache<T>(this: Observable<T>, windowTime: number, options: Cache
 
   if (options.mode === CacheMode.SilentRefresh) {
     observable = observable
-        .timestamp()
+        .timestamp(scheduler)
         .publishReplay(1, Number.POSITIVE_INFINITY, scheduler)
         .refCount()
         .takeWhileInclusive((item, i) => {
@@ -40,16 +44,16 @@ export function cache<T>(this: Observable<T>, windowTime: number, options: Cache
           // the second item always needs to be the last one
           return false;
         })
-        .map((item, i) => i === 0 ? item : null) // always ignore the second item
-        .filter(Boolean)
+        .filter((item, i) => i === 0) // always pass only the first item
         .map(item => item.value);
 
   } else if (options.mode === CacheMode.TolerateExpired) {
     observable = observable
-        .timestamp()
+        .timestamp(scheduler)
+        .do(console.log)
         .publishReplay(1, Number.POSITIVE_INFINITY, scheduler)
         .refCount()
-        .takeWhileInclusive(item => {
+        .takeWhileInclusive((item, i) => {
           // check whether the cached item is still valid
           return getNow(scheduler) > item.timestamp + windowTime;
         })
