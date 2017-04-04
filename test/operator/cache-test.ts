@@ -96,29 +96,71 @@ describe('Observable.prototype.cache', () => {
 
   it("should emit the same error to multiple observers withing the same time window", () => {
     const err = new Error();
-    const cached = createSource()
+    const source = createSource()
         .map(item => {
           if (item === 'a') {
             throw err;
           }
           return item;
-        }).cache(50, null, rxTestScheduler);
+        })
+        .cache(50, null, rxTestScheduler);
 
     const e1 =          '-#';
     const e2 =          '-#';
 
-    expectObservable(cached).toBe(e1, undefined, err);
-    expectObservable(cached).toBe(e2, undefined, err);
+    expectObservable(source).toBe(e1, undefined, err);
+    expectObservable(source).toBe(e2, undefined, err);
   });
 
-  it("should emit two items when tolerating the expired items too", () => {
+  it("should throw a single error when using catchErrors=false option", () => {
+    const err = new Error();
+    const source = createSource()
+        .map(item => {
+          if (item === 'b') {
+            throw err;
+          }
+          return item;
+        })
+        .cache(50, {catchErrors: false}, rxTestScheduler);
+
+    const notifier = hot('---1--2-34--5--');
+    const expected1 =    '-a-a---#';
+
+    expectObservable(source.repeatWhen(() => notifier)).toBe(expected1, undefined, err);
+  });
+
+  it("should emit one or two items when tolerating the expired items", () => {
     const opts = <CacheOptions>{mode: CacheMode.TolerateExpired};
     const source = createSource().cache(50, opts, rxTestScheduler);
 
     //                  a -----
     //                  b      -----
-    const notifier = hot('-------1-');
-    const expected1 =    '-a-----ab';
+    const notifier = hot('---1---2--');
+    const expected1 =    '-a-a---ab-';
+
+    expectObservable(source.repeatWhen(() => notifier)).toBe(expected1);
+  });
+
+  it("should emit two items when tolerating the expired items", () => {
+    const opts = <CacheOptions>{mode: CacheMode.TolerateExpired};
+    const source = createSource().cache(50, opts, rxTestScheduler);
+
+    //                  a -----
+    //                  b      -----
+    const notifier = hot('-------1--');
+    const expected1 =    '-a-----ab-';
+
+    expectObservable(source.repeatWhen(() => notifier)).toBe(expected1);
+  });
+
+  it("should emit one item and silently refresh in silent mode", () => {
+    const opts = <CacheOptions>{mode: CacheMode.SilentRefresh};
+    const source = createSource().cache(50, opts, rxTestScheduler);
+
+    //                  a -----
+    //                  b      -----
+    const notifier = hot('------1---');
+    const expected1 =    '-a----a---';
 
     expectObservable(source.repeatWhen(() => notifier)).toBe(expected1);
   });

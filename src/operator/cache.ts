@@ -37,7 +37,7 @@ export function cache<T>(this: Observable<T>, windowTime: number, options: Cache
         .timestamp(scheduler)
         .publishReplay(1, Number.POSITIVE_INFINITY, scheduler)
         .refCount()
-        .takeWhileInclusive((item, i) => {
+        .takeWhileInclusive(item) => {
           if (i === 0) { // check only the first item whether it's still valid
             return getNow(scheduler) > item.timestamp + windowTime;
           }
@@ -50,10 +50,9 @@ export function cache<T>(this: Observable<T>, windowTime: number, options: Cache
   } else if (options.mode === CacheMode.TolerateExpired) {
     observable = observable
         .timestamp(scheduler)
-        .do(console.log)
         .publishReplay(1, Number.POSITIVE_INFINITY, scheduler)
         .refCount()
-        .takeWhileInclusive((item, i) => {
+        .takeWhileInclusive(item) => {
           // check whether the cached item is still valid
           return getNow(scheduler) > item.timestamp + windowTime;
         })
