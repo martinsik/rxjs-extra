@@ -1,4 +1,4 @@
-import { Operator, Observable, Subscriber, Scheduler } from 'rxjs';
+import { Observable, Scheduler } from 'rxjs';
 import { Scheduler as SchedulerI } from 'rxjs/Scheduler';
 import 'rxjs/add/operator/publishReplay';
 import 'rxjs/add/operator/take';
@@ -37,7 +37,7 @@ export function cache<T>(this: Observable<T>, windowTime: number, options: Cache
         .timestamp(scheduler)
         .publishReplay(1, Number.POSITIVE_INFINITY, scheduler)
         .refCount()
-        .takeWhileInclusive(item) => {
+        .takeWhileInclusive((item, i) => {
           if (i === 0) { // check only the first item whether it's still valid
             return getNow(scheduler) > item.timestamp + windowTime;
           }
@@ -52,7 +52,7 @@ export function cache<T>(this: Observable<T>, windowTime: number, options: Cache
         .timestamp(scheduler)
         .publishReplay(1, Number.POSITIVE_INFINITY, scheduler)
         .refCount()
-        .takeWhileInclusive(item) => {
+        .takeWhileInclusive(item => {
           // check whether the cached item is still valid
           return getNow(scheduler) > item.timestamp + windowTime;
         })
