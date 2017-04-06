@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha test-js",
+    "mocha": "mocha",
     "clean": "npm run spec_clean && npm run test_clean",
     "clean_cjs": "rm -rf dist/cjs",
     "clean_test": "rm -rf test-js",
