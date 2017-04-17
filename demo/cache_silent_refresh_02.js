@@ -1,5 +1,5 @@
 /**
- * Demo featuring the cache() operator with in CacheMode.SilentRefresh.
+ * Demo featuring the cache() operator with in CacheMode.SilentRefresh mode.
  *
  * The order of things is as follows:
  *     0ms: The first observer subscribes.

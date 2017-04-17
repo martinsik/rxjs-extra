@@ -2,7 +2,7 @@ import { Observable, Operator, Subscriber } from 'rxjs';
 import { Scheduler as IScheduler } from 'rxjs/Scheduler';
 
 
-export function endWith<T, R>(this: Observable<T>, ...values: Array<IScheduler | T | R>): Observable<R> {
+export function endWith<T>(this: Observable<T>, ...values: Array<IScheduler | T>): Observable<T> {
   // check if the last parameter is a Scheduler
   const len = values.length;
   let scheduler = null;
@@ -13,10 +13,10 @@ export function endWith<T, R>(this: Observable<T>, ...values: Array<IScheduler |
   return this.lift(new EndWithOperator(values, scheduler));
 }
 
-class EndWithOperator<T, R> implements Operator<T, R> {
-  constructor(private values: R[], private scheduler?: IScheduler) { }
+class EndWithOperator<T> implements Operator<T, T> {
+  constructor(private values: T[], private scheduler?: IScheduler) { }
 
-  call(subscriber: Subscriber<R>, source: any) {
+  call(subscriber: Subscriber<T>, source: any) {
     return source.subscribe(new EndWithSubscriber(subscriber, this.values));
   }
 }

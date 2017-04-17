@@ -1,5 +1,5 @@
 /**
- * Demo featuring the cache() operator with in CacheMode.TolerateExpired.
+ * Demo featuring the cache() operator with in CacheMode.TolerateExpired mode.
  *
  * In this demo each subscriber receives one or two items:
  *  1. The cached item

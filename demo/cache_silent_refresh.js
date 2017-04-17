@@ -1,5 +1,5 @@
 /**
- * Demo featuring the cache() operator with in CacheMode.SilentRefresh.
+ * Demo featuring the cache() operator with in CacheMode.SilentRefresh mode.
  *
  * In this demo the cache() operator always emits just one item and then eventually refreshes
  * the cache without emitting the result. This means that this operator will emit immediately but
