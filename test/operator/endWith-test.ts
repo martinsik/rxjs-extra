@@ -146,13 +146,13 @@ describe('Observable.prototype.endWith', () => {
   it('should dispose the source properly before endWith when using a scheduler', (done) => {
     Observable.of(42)
         .finally(done)
-        .endWith(endWithValue, rxTestScheduler)
+        .endWith<number | string>(endWithValue, rxTestScheduler)
         .subscribe(() => {});
   });
 
   it('should dispose the source properly after endWith when using a scheduler', (done) => {
     Observable.of(42)
-        .endWith(endWithValue, rxTestScheduler)
+        .endWith<number | string>(endWithValue, rxTestScheduler)
         .finally(done)
         .subscribe(() => {});
   });
