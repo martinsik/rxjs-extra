@@ -8,12 +8,12 @@ index 9c0cee5..5716348 100644
 -import {SubscriptionLog} from '../../dist/cjs/testing/SubscriptionLog';
 -import {ColdObservable} from '../../dist/cjs/testing/ColdObservable';
 -import {HotObservable} from '../../dist/cjs/testing/HotObservable';
--import {observableToBeFn, subscriptionLogsToBeFn} from '../../dist/cjs/testing/TestScheduler';
+-import {TestScheduler, observableToBeFn, subscriptionLogsToBeFn} from '../../dist/cjs/testing/TestScheduler';
 +import {Observable} from 'rxjs/Rx';
 +import {SubscriptionLog} from 'rxjs/testing/SubscriptionLog';
 +import {ColdObservable} from 'rxjs/testing/ColdObservable';
 +import {HotObservable} from 'rxjs/testing/HotObservable';
-+import {observableToBeFn, subscriptionLogsToBeFn} from 'rxjs/testing/TestScheduler';
++import {TestScheduler, observableToBeFn, subscriptionLogsToBeFn} from 'rxjs/testing/TestScheduler';
  
  declare const global: any;
  
