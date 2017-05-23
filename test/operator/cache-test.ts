@@ -4,7 +4,7 @@ import {CacheMode, CacheOptions} from '../../dist/cjs/src/operator/cache';
 import {expect} from 'chai';
 import marbleTestingSignature = require('../helpers/marble-testing'); // tslint:disable-line:no-require-imports
 
-declare const { asDiagram };
+declare const { asDiagram, time };
 declare const hot: typeof marbleTestingSignature.hot;
 declare const cold: typeof marbleTestingSignature.cold;
 declare const expectObservable: typeof marbleTestingSignature.expectObservable;
@@ -21,13 +21,14 @@ describe('Observable.prototype.cache', () => {
   }
 
   asDiagram('cache(50)')('should cache the items for 50 time window', () => {
-    const source = createSource().cache(50, null, rxTestScheduler);
     //                  a -----
     //                  b      -----
     //                  c           -----
+    const t = time('-----|');
     const notifier = hot('---1--2-34--5--');
     const expected1 =    '-a-a---bbb---c-';
 
+    const source = createSource().cache(t, null, rxTestScheduler);
     expectObservable(source.repeatWhen(() => notifier)).toBe(expected1);
   });
 
