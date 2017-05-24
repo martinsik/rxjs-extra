@@ -5,6 +5,17 @@ Collection of additional RxJS 5 operators
 
 # Operators
 
+## cache
+
+## endWith
+
+![endWith](https://raw.githubusercontent.com/martinsik/rxjs-plus/master/doc/endWith.png "The endWith() operator")
+
+## rateLimit
+
+![rateLimit](https://raw.githubusercontent.com/martinsik/rxjs-plus/master/doc/rateLimit.png "The rateLimit() operator")
+
+
 ## takeWhileInclusive
 
 ![takeWhileInclusive](https://raw.githubusercontent.com/martinsik/rxjs-plus/master/doc/takeWhileInclusive.png "The takeWhileInclusive() operator")
