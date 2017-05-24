@@ -4,7 +4,7 @@ import {CacheMode, CacheOptions} from '../../dist/cjs/src/operator/cache';
 import {expect} from 'chai';
 import marbleTestingSignature = require('../helpers/marble-testing'); // tslint:disable-line:no-require-imports
 
-declare const { asDiagram };
+declare const { asDiagram, time };
 declare const hot: typeof marbleTestingSignature.hot;
 declare const cold: typeof marbleTestingSignature.cold;
 declare const expectObservable: typeof marbleTestingSignature.expectObservable;
@@ -21,18 +21,20 @@ describe('Observable.prototype.cache', () => {
   }
 
   asDiagram('cache(50)')('should cache the items for 50 time window', () => {
-    const source = createSource().cache(50, null, rxTestScheduler);
     //                  a -----
     //                  b      -----
     //                  c           -----
+    const t = time('-----|');
     const notifier = hot('---1--2-34--5--');
     const expected1 =    '-a-a---bbb---c-';
 
+    const source = createSource().cache(t, null, rxTestScheduler);
     expectObservable(source.repeatWhen(() => notifier)).toBe(expected1);
   });
 
   it('should propagate the error when source emits error by default', () => {
     const err = new Error();
+    const t = time('-----|');
     const source = createSource()
         .map(item => {
           if (item === 'b') {
@@ -40,7 +42,7 @@ describe('Observable.prototype.cache', () => {
           }
           return item;
         })
-        .cache(50, null, rxTestScheduler);
+        .cache(t, null, rxTestScheduler);
 
     //                  a -----
     //                  b      -----
@@ -52,7 +54,8 @@ describe('Observable.prototype.cache', () => {
 
   it('should send complete when requesting a single value', () => {
     const source = cold('--(a|)');
-    const cached = source.cache(50, null, rxTestScheduler);
+    const t = time('-----|');
+    const cached = source.cache(t, null, rxTestScheduler);
     const e1 =          '--(a|)';
     const e1sub =       '^-!';
 
@@ -62,7 +65,8 @@ describe('Observable.prototype.cache', () => {
 
   it("shouldn't emit anything if the source doesn't emit", () => {
     const source = cold('----');
-    const cached = source.cache(50, null, rxTestScheduler);
+    const t = time('-----|');
+    const cached = source.cache(t, null, rxTestScheduler);
     const e1 =          '----';
     const e1sub =       '^---';
 
@@ -72,7 +76,8 @@ describe('Observable.prototype.cache', () => {
 
   it("should emit when the source takes longer that the time window", () => {
     const source = cold('---------a');
-    const cached = source.cache(50, null, rxTestScheduler);
+    const t = time('-----|');
+    const cached = source.cache(t, null, rxTestScheduler);
     const e1 =          '---------(a|)';
     const e1sub =       '^--------!';
 
@@ -81,7 +86,8 @@ describe('Observable.prototype.cache', () => {
   });
 
   it("should emit the same value to multiple observers withing the same time window", () => {
-    const cached = createSource().cache(50, null, rxTestScheduler);
+    const t = time('-----|');
+    const cached = createSource().cache(t, null, rxTestScheduler);
     const e1 =           '-(a|)';
     const e2 =           '-(a|)';
     //                  a -----
@@ -96,6 +102,7 @@ describe('Observable.prototype.cache', () => {
 
   it("should emit the same error to multiple observers withing the same time window", () => {
     const err = new Error();
+    const t = time('-----|');
     const source = createSource()
         .map(item => {
           if (item === 'a') {
@@ -103,7 +110,7 @@ describe('Observable.prototype.cache', () => {
           }
           return item;
         })
-        .cache(50, null, rxTestScheduler);
+        .cache(t, null, rxTestScheduler);
 
     const e1 =          '-#';
     const e2 =          '-#';
@@ -114,6 +121,7 @@ describe('Observable.prototype.cache', () => {
 
   it("should throw a single error when using catchErrors=false option", () => {
     const err = new Error();
+    const t = time('-----|');
     const source = createSource()
         .map(item => {
           if (item === 'b') {
@@ -121,7 +129,7 @@ describe('Observable.prototype.cache', () => {
           }
           return item;
         })
-        .cache(50, {catchErrors: false}, rxTestScheduler);
+        .cache(t, {catchErrors: false}, rxTestScheduler);
 
     const notifier = hot('---1--2-34--5--');
     const expected1 =    '-a-a---#';
@@ -131,7 +139,8 @@ describe('Observable.prototype.cache', () => {
 
   it("should emit one or two items when tolerating the expired items", () => {
     const opts = <CacheOptions>{mode: CacheMode.TolerateExpired};
-    const source = createSource().cache(50, opts, rxTestScheduler);
+    const t = time('-----|');
+    const source = createSource().cache(t, opts, rxTestScheduler);
 
     //                  a -----
     //                  b      -----
@@ -143,7 +152,8 @@ describe('Observable.prototype.cache', () => {
 
   it("should emit two items when tolerating the expired items", () => {
     const opts = <CacheOptions>{mode: CacheMode.TolerateExpired};
-    const source = createSource().cache(50, opts, rxTestScheduler);
+    const t = time('-----|');
+    const source = createSource().cache(t, opts, rxTestScheduler);
 
     //                  a -----
     //                  b      -----
@@ -155,7 +165,8 @@ describe('Observable.prototype.cache', () => {
 
   it("should emit one item and silently refresh in silent mode", () => {
     const opts = <CacheOptions>{mode: CacheMode.SilentRefresh};
-    const source = createSource().cache(50, opts, rxTestScheduler);
+    const t = time('-----|');
+    const source = createSource().cache(t, opts, rxTestScheduler);
 
     //                  a -----
     //                  b      -----
