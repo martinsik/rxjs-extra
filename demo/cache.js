@@ -3,7 +3,7 @@
  */
 const Rx = require('rxjs');
 const Observable = Rx.Observable;
-const RxPlus = require('../dist/cjs/index');
+require('../dist/es5/bundles/RxPlus');
 
 let counter = 0;
 

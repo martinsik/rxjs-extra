@@ -1,6 +1,6 @@
 import * as Rx from 'rxjs';
+import {CacheMode, CacheOptions} from '../../dist/cjs/index';
 import '../../dist/cjs/index';
-import {CacheMode, CacheOptions} from '../../dist/cjs/src/operator/cache';
 import {expect} from 'chai';
 import marbleTestingSignature = require('../helpers/marble-testing'); // tslint:disable-line:no-require-imports
 

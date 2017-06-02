@@ -11,6 +11,10 @@ Collection of additional RxJS 5 operators
 
 ![endWith](https://raw.githubusercontent.com/martinsik/rxjs-plus/master/doc/endWith.png "The endWith() operator")
 
+## queueTime
+
+![queueTime](https://raw.githubusercontent.com/martinsik/rxjs-plus/master/doc/queueTime.png "The queueTime() operator")
+
 ## rateLimit
 
 ![rateLimit](https://raw.githubusercontent.com/martinsik/rxjs-plus/master/doc/rateLimit.png "The rateLimit() operator")

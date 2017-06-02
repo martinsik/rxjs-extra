@@ -1,5 +1,6 @@
-import { Observable, Scheduler } from 'rxjs';
-import { Scheduler as SchedulerI } from 'rxjs/Scheduler';
+import { Observable } from 'rxjs/Observable';
+import { Scheduler as Scheduler } from 'rxjs/Scheduler';
+import { async as asyncScheduler } from 'rxjs/scheduler/async';
 import 'rxjs/add/operator/publishReplay';
 import 'rxjs/add/operator/take';
 import '../add/operator/takeWhileInclusive';
@@ -20,7 +21,7 @@ export type CacheOptions = {
   mode?: CacheMode
 };
 
-export function cache<T>(this: Observable<T>, windowTime: number, options: CacheOptions = {}, scheduler?: SchedulerI): Observable<T> {
+export function cache<T>(this: Observable<T>, windowTime: number, options: CacheOptions = {}, scheduler?: Scheduler): Observable<T> {
   if (!options) {
     options = <CacheOptions>{};
   }
@@ -77,6 +78,6 @@ export function cache<T>(this: Observable<T>, windowTime: number, options: Cache
   return <Observable<T>>observable;
 }
 
-function getNow(scheduler: SchedulerI): number {
-  return (scheduler || Scheduler.async).now()
+function getNow(scheduler: Scheduler): number {
+  return (scheduler || asyncScheduler).now()
 }
