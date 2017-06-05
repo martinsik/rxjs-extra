@@ -1,9 +1,10 @@
 /**
  * Demo featuring the cache() operator with default options.
  */
-const Rx = require('rxjs');
-const Observable = Rx.Observable;
-require('../dist/es5/bundles/RxPlus');
+const Observable = require('rxjs/Observable').Observable;
+require('rxjs/add/observable/defer');
+require('rxjs/add/observable/of');
+require('../dist/cjs/add/operator/cache');
 
 let counter = 0;
 

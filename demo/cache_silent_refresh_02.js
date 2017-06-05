@@ -8,17 +8,20 @@
  *           subscribes to the source Observable but the fresh emitted value is silently suppressed.
  *  1700ms: The third observer subscribes. It receives only value "1" and completes.
  */
-const Rx = require('rxjs');
-const Observable = Rx.Observable;
-const RxPlus = require('../dist/cjs/index');
+const Observable = require('rxjs/Observable').Observable;
+require('rxjs/add/observable/defer');
+require('rxjs/add/observable/of');
+const CacheMode = require('../dist/cjs/operator/cache').CacheMode;
+require('../dist/cjs/add/operator/cache');
 
 function now() {
   return (new Date()).getTime();
 }
+const start = now();
 
 let observer = {
-  next: (val) => console.log(now(), val),
-  complete: () => console.log(now(), 'complete'),
+  next: (val) => console.log(now() - start, val),
+  complete: () => console.log(now() - start, 'complete'),
 };
 let counter = 0;
 
@@ -26,7 +29,7 @@ let source = Observable.defer(() => {
     console.log('Observable.defer');
     return Observable.of(counter++).delay(100);
   })
-  .cache(1000, {mode: RxPlus.CacheMode.SilentRefresh});
+  .cache(1000, {mode: CacheMode.SilentRefresh});
 
 setTimeout(() => source.subscribe(observer), 0);
 setTimeout(() => source.subscribe(observer), 1500);
@@ -39,11 +42,11 @@ setTimeout(() => source.subscribe(observer), 1700);
  *
  * Expected output:
 Observable.defer
-1491827410972 0
-1491827410990 'complete'
-1491827412339 0
+137 0
+140 'complete'
+1506 0
 Observable.defer
-1491827412446 'complete'
-1491827412538 1
-1491827412538 'complete'
+1609 'complete'
+1705 1
+1705 'complete'
 */

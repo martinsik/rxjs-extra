@@ -2,13 +2,17 @@
  * Demo featuring the cache() operator with in CacheMode.SilentRefresh mode.
  *
  * In this demo the cache() operator always emits just one item and then eventually refreshes
- * the cache without emitting the result. This means that this operator will emit immediately but
- * if the cache needs to be refreshed the complete notification is send after the source emits.
+ * the cache without emitting the refreshed result. This means that this operator will emit immediately any item that
+ * is currently in cache but if the cache needs to be refreshed then the complete notification is send
+ * after the source emits.
+ *
  * See cache_silent_refresh_02.js for another example with timestamps.
  */
-const Rx = require('rxjs');
-const Observable = Rx.Observable;
-const RxPlus = require('../dist/cjs/index');
+const Observable = require('rxjs/Observable').Observable;
+require('rxjs/add/observable/defer');
+require('rxjs/add/observable/of');
+const CacheMode = require('../dist/cjs/operator/cache').CacheMode;
+require('../dist/cjs/add/operator/cache');
 
 let counter = 0;
 
@@ -16,7 +20,7 @@ let source = Observable.defer(() => {
     console.log('Observable.defer');
     return Observable.of(counter++).delay(100);
   })
-  .cache(1000, {mode: RxPlus.CacheMode.SilentRefresh});
+  .cache(1000, {mode: CacheMode.SilentRefresh});
 
 setTimeout(() => source.subscribe(val => console.log('sub1', val)), 0);
 setTimeout(() => source.subscribe(val => console.log('sub2', val)), 200);

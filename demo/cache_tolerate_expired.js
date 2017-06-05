@@ -6,9 +6,11 @@
  *  2. Another item if the currently cached item was stale
  *
  */
-const Rx = require('rxjs');
-const Observable = Rx.Observable;
-const RxPlus = require('../dist/cjs/index');
+const Observable = require('rxjs/Observable').Observable;
+require('rxjs/add/observable/defer');
+require('rxjs/add/observable/of');
+const CacheMode = require('../dist/cjs/operator/cache').CacheMode;
+require('../dist/cjs/add/operator/cache');
 
 let counter = 0;
 
@@ -16,7 +18,7 @@ let source = Observable.defer(() => {
     console.log('Observable.defer');
     return Observable.of(counter++).delay(100);
   })
-  .cache(1000, {mode: RxPlus.CacheMode.TolerateExpired});
+  .cache(1000, {mode: CacheMode.TolerateExpired});
 
 setTimeout(() => source.subscribe(val => console.log('sub1', val)), 0);
 setTimeout(() => source.subscribe(val => console.log('sub2', val)), 200);
