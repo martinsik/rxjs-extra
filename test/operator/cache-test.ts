@@ -1,10 +1,10 @@
 import * as Rx from 'rxjs';
-import {CacheMode, CacheOptions} from '../../dist/cjs/index';
-import '../../dist/cjs/index';
+import {CacheMode, CacheOptions} from '../../dist/cjs/operator/cache';
+import '../../dist/cjs/RxPlus';
 import {expect} from 'chai';
 import marbleTestingSignature = require('../helpers/marble-testing'); // tslint:disable-line:no-require-imports
 
-declare const { asDiagram, time };
+declare const {asDiagram, time};
 declare const hot: typeof marbleTestingSignature.hot;
 declare const cold: typeof marbleTestingSignature.cold;
 declare const expectObservable: typeof marbleTestingSignature.expectObservable;
@@ -26,7 +26,7 @@ describe('Observable.prototype.cache', () => {
     //                  c           -----
     const t = time('-----|');
     const notifier = hot('---1--2-34--5--');
-    const expected1 =    '-a-a---bbb---c-';
+    const expected1 = '-a-a---bbb---c-';
 
     const source = createSource().cache(t, null, rxTestScheduler);
     expectObservable(source.repeatWhen(() => notifier)).toBe(expected1);
@@ -36,18 +36,18 @@ describe('Observable.prototype.cache', () => {
     const err = new Error();
     const t = time('-----|');
     const source = createSource()
-        .map(item => {
-          if (item === 'b') {
-            throw err;
-          }
-          return item;
-        })
-        .cache(t, null, rxTestScheduler);
+      .map(item => {
+        if (item === 'b') {
+          throw err;
+        }
+        return item;
+      })
+      .cache(t, null, rxTestScheduler);
 
     //                  a -----
     //                  b      -----
     const notifier = hot('------1-');
-    const expected1 =    '-a-----#';
+    const expected1 = '-a-----#';
 
     expectObservable(source.repeatWhen(() => notifier)).toBe(expected1, undefined, err);
   });
@@ -56,8 +56,8 @@ describe('Observable.prototype.cache', () => {
     const source = cold('--(a|)');
     const t = time('-----|');
     const cached = source.cache(t, null, rxTestScheduler);
-    const e1 =          '--(a|)';
-    const e1sub =       '^-!';
+    const e1 = '--(a|)';
+    const e1sub = '^-!';
 
     expectObservable(cached).toBe(e1);
     expectSubscriptions(source.subscriptions).toBe(e1sub);
@@ -67,8 +67,8 @@ describe('Observable.prototype.cache', () => {
     const source = cold('----');
     const t = time('-----|');
     const cached = source.cache(t, null, rxTestScheduler);
-    const e1 =          '----';
-    const e1sub =       '^---';
+    const e1 = '----';
+    const e1sub = '^---';
 
     expectObservable(cached).toBe(e1);
     expectSubscriptions(source.subscriptions).toBe(e1sub);
@@ -78,8 +78,8 @@ describe('Observable.prototype.cache', () => {
     const source = cold('---------a');
     const t = time('-----|');
     const cached = source.cache(t, null, rxTestScheduler);
-    const e1 =          '---------(a|)';
-    const e1sub =       '^--------!';
+    const e1 = '---------(a|)';
+    const e1sub = '^--------!';
 
     expectObservable(cached).toBe(e1);
     expectSubscriptions(source.subscriptions).toBe(e1sub);
@@ -88,12 +88,12 @@ describe('Observable.prototype.cache', () => {
   it("should emit the same value to multiple observers withing the same time window", () => {
     const t = time('-----|');
     const cached = createSource().cache(t, null, rxTestScheduler);
-    const e1 =           '-(a|)';
-    const e2 =           '-(a|)';
+    const e1 = '-(a|)';
+    const e2 = '-(a|)';
     //                  a -----
     //                  b      -----
     const notifier = hot('------1---');
-    const e3 =           '-a-----b--';
+    const e3 = '-a-----b--';
 
     expectObservable(cached).toBe(e1);
     expectObservable(cached).toBe(e2);
@@ -104,16 +104,16 @@ describe('Observable.prototype.cache', () => {
     const err = new Error();
     const t = time('-----|');
     const source = createSource()
-        .map(item => {
-          if (item === 'a') {
-            throw err;
-          }
-          return item;
-        })
-        .cache(t, null, rxTestScheduler);
+      .map(item => {
+        if (item === 'a') {
+          throw err;
+        }
+        return item;
+      })
+      .cache(t, null, rxTestScheduler);
 
-    const e1 =          '-#';
-    const e2 =          '-#';
+    const e1 = '-#';
+    const e2 = '-#';
 
     expectObservable(source).toBe(e1, undefined, err);
     expectObservable(source).toBe(e2, undefined, err);
@@ -123,16 +123,16 @@ describe('Observable.prototype.cache', () => {
     const err = new Error();
     const t = time('-----|');
     const source = createSource()
-        .map(item => {
-          if (item === 'b') {
-            throw err;
-          }
-          return item;
-        })
-        .cache(t, {catchErrors: false}, rxTestScheduler);
+      .map(item => {
+        if (item === 'b') {
+          throw err;
+        }
+        return item;
+      })
+      .cache(t, {catchErrors: false}, rxTestScheduler);
 
     const notifier = hot('---1--2-34--5--');
-    const expected1 =    '-a-a---#';
+    const expected1 = '-a-a---#';
 
     expectObservable(source.repeatWhen(() => notifier)).toBe(expected1, undefined, err);
   });
@@ -145,7 +145,7 @@ describe('Observable.prototype.cache', () => {
     //                  a -----
     //                  b      -----
     const notifier = hot('---1---2--');
-    const expected1 =    '-a-a---ab-';
+    const expected1 = '-a-a---ab-';
 
     expectObservable(source.repeatWhen(() => notifier)).toBe(expected1);
   });
@@ -158,7 +158,7 @@ describe('Observable.prototype.cache', () => {
     //                  a -----
     //                  b      -----
     const notifier = hot('-------1--');
-    const expected1 =    '-a-----ab-';
+    const expected1 = '-a-----ab-';
 
     expectObservable(source.repeatWhen(() => notifier)).toBe(expected1);
   });
@@ -171,7 +171,7 @@ describe('Observable.prototype.cache', () => {
     //                  a -----
     //                  b      -----
     const notifier = hot('------1---');
-    const expected1 =    '-a----a---';
+    const expected1 = '-a----a---';
 
     expectObservable(source.repeatWhen(() => notifier)).toBe(expected1);
   });

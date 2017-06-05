@@ -1,4 +1,4 @@
-import { Operator, Observable, Subscriber } from 'rxjs';
+import {Operator, Observable, Subscriber} from 'rxjs';
 
 
 export function takeWhileInclusive<T>(this: Observable<T>, predicate: (value: T, index: number) => boolean): Observable<T> {
@@ -6,7 +6,8 @@ export function takeWhileInclusive<T>(this: Observable<T>, predicate: (value: T,
 }
 
 class TakeWhileInclusiveOperator<T> implements Operator<T, T> {
-  constructor(private predicate: (value: T, index: number) => boolean) { }
+  constructor(private predicate: (value: T, index: number) => boolean) {
+  }
 
   call(subscriber: Subscriber<T>, source: any) {
     return source.subscribe(new TakeWhileInclusiveSubscriber(subscriber, this.predicate));

@@ -1,5 +1,5 @@
-import { Observable, Operator, Subscriber } from 'rxjs';
-import { Scheduler as IScheduler } from 'rxjs/Scheduler';
+import {Observable, Operator, Subscriber} from 'rxjs';
+import {Scheduler as IScheduler} from 'rxjs/Scheduler';
 
 
 export function endWith<T>(this: Observable<T>, ...values: Array<IScheduler | T>): Observable<T> {
@@ -14,7 +14,8 @@ export function endWith<T>(this: Observable<T>, ...values: Array<IScheduler | T>
 }
 
 class EndWithOperator<T> implements Operator<T, T> {
-  constructor(private values: T[], private scheduler?: IScheduler) { }
+  constructor(private values: T[], private scheduler?: IScheduler) {
+  }
 
   call(subscriber: Subscriber<T>, source: any) {
     return source.subscribe(new EndWithSubscriber(subscriber, this.values));
@@ -27,7 +28,7 @@ class EndWithSubscriber<T> extends Subscriber<T> {
   }
 
   protected _complete() {
-    const { destination, values, scheduler } = this;
+    const {destination, values, scheduler} = this;
 
     if (scheduler) {
       Observable.from(values, scheduler).subscribe(destination);

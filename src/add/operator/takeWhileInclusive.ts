@@ -1,5 +1,5 @@
-import { Observable } from 'rxjs/Observable';
-import { takeWhileInclusive } from '../../operator/takeWhileInclusive';
+import {Observable} from 'rxjs/Observable';
+import {takeWhileInclusive} from '../../operator/takeWhileInclusive';
 
 Observable.prototype.takeWhileInclusive = takeWhileInclusive;
 

@@ -1,7 +1,7 @@
-import { Operator, Observable, Subscriber, Subscription, Scheduler } from 'rxjs';
-import { PartialObserver } from 'rxjs/Observer';
-import { Action } from 'rxjs/scheduler/Action';
-import { Scheduler as SchedulerI } from 'rxjs/Scheduler';
+import {Operator, Observable, Subscriber, Subscription, Scheduler} from 'rxjs';
+import {PartialObserver} from 'rxjs/Observer';
+import {Action} from 'rxjs/scheduler/Action';
+import {Scheduler as SchedulerI} from 'rxjs/Scheduler';
 
 
 export function rateLimit<T>(this: Observable<T>, count: number, timeWindow: number, emitAsap: boolean = false, scheduler: SchedulerI = Scheduler.async): Observable<T[]> {
@@ -9,7 +9,8 @@ export function rateLimit<T>(this: Observable<T>, count: number, timeWindow: num
 }
 
 class RateLimitOperator<T> implements Operator<T, T[]> {
-  constructor(private count: number, private timeWindow: number, private emitAsap: boolean, private scheduler: SchedulerI) { }
+  constructor(private count: number, private timeWindow: number, private emitAsap: boolean, private scheduler: SchedulerI) {
+  }
 
   call(subscriber: Subscriber<T[]>, source: any) {
     return source.subscribe(new RateLimitSubscriber(subscriber, this.count, this.timeWindow, this.emitAsap, this.scheduler));
@@ -26,7 +27,7 @@ class RateLimitSubscriber<T> extends Subscriber<T> {
   }
 
   private emitScheduledBuffer(state: RateLimitScheduledState<T>): void {
-    const { destination, count, timeWindow, buffer, clear, isStopped, storeLastEmissionTime, now, complete } = state;
+    const {destination, count, timeWindow, buffer, clear, isStopped, storeLastEmissionTime, now, complete} = state;
 
     let chunk = buffer.splice(0, count);
     destination.next(chunk);
@@ -75,8 +76,8 @@ class RateLimitSubscriber<T> extends Subscriber<T> {
     this.scheduledAction = scheduler.schedule(this.emitScheduledBuffer, time, state);
   }
 
-  protected  _next(value: T): void {
-    const { lastEmissionTime, buffer, timeWindow } = this;
+  protected _next(value: T): void {
+    const {lastEmissionTime, buffer, timeWindow} = this;
     const now = this.scheduler.now();
 
     if (this.emitAsap && buffer.length === 0) {

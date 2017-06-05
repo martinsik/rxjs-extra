@@ -1,9 +1,9 @@
 import * as Rx from 'rxjs';
-import '../../dist/cjs/index';
+import '../../dist/cjs/RxPlus';
 import {expect} from 'chai';
 import marbleTestingSignature = require('../helpers/marble-testing');
 
-declare const { asDiagram, time };
+declare const {asDiagram, time};
 declare const hot: typeof marbleTestingSignature.hot;
 declare const cold: typeof marbleTestingSignature.cold;
 declare const expectObservable: typeof marbleTestingSignature.expectObservable;
@@ -17,8 +17,8 @@ describe('Observable.prototype.rateLimit', () => {
     //                             xx----------
     const t = time('----------|');
     const source = hot('-1--2-3------4-5678------9--|');
-    const expected =   '-----------x-----------y---------(z|)';
-    const subs =       '^                                !';
+    const expected = '-----------x-----------y---------(z|)';
+    const subs = '^                                !';
     const values = {
       x: ['1', '2', '3'],
       y: ['4', '5', '6'],
@@ -33,14 +33,14 @@ describe('Observable.prototype.rateLimit', () => {
     //                  ----------          ----------
     //                            ----------          ----------
     const source = hot('abcdefghijklmnopqr|');
-    const expected =   '----------x---------y---------z---------(u|)';
-    const subs =       '^                                       !';
-    const t =     time('----------|');
+    const expected = '----------x---------y---------z---------(u|)';
+    const subs = '^                                       !';
+    const t = time('----------|');
     const values = {
       x: ['a', 'b', 'c', 'd', 'e'],
       y: ['f', 'g', 'h', 'i', 'j'],
       z: ['k', 'l', 'm', 'n', 'o'],
-      u: ['p', 'q', 'r'] ,
+      u: ['p', 'q', 'r'],
     };
 
     expectObservable(source.rateLimit(5, t, false, rxTestScheduler)).toBe(expected, values);
@@ -49,9 +49,9 @@ describe('Observable.prototype.rateLimit', () => {
 
   it('should complete when the source is empty', () => {
     const source = hot('--|');
-    const expected =   '--|';
-    const subs =       '^ !';
-    const t =     time('----------|');
+    const expected = '--|';
+    const subs = '^ !';
+    const t = time('----------|');
 
     expectObservable(source.rateLimit(5, t, false, rxTestScheduler)).toBe(expected);
     expectSubscriptions(source.subscriptions).toBe(subs);
@@ -61,9 +61,9 @@ describe('Observable.prototype.rateLimit', () => {
     //                  ----------
     //                            ----------
     const source = hot('a-bc--------------------|');
-    const expected =   '----------x-------------|';
-    const subs =       '^                       !';
-    const t =     time('----------|');
+    const expected = '----------x-------------|';
+    const subs = '^                       !';
+    const t = time('----------|');
     const values = {
       x: ['a', 'b', 'c'],
     };
@@ -75,9 +75,9 @@ describe('Observable.prototype.rateLimit', () => {
   it('should propagate error immediately', () => {
     const err = new Error();
     const source = hot('a-bc--#', undefined, err);
-    const expected =   '------#';
-    const subs =       '^     !';
-    const t =     time('----------|');
+    const expected = '------#';
+    const subs = '^     !';
+    const t = time('----------|');
 
     expectObservable(source.rateLimit(5, t, false, rxTestScheduler)).toBe(expected, undefined, err);
     expectSubscriptions(source.subscriptions).toBe(subs);
@@ -87,9 +87,9 @@ describe('Observable.prototype.rateLimit', () => {
     //                  -----     x-----     xx-----
     //                       -----      -----
     const source = hot('12-3-------4-567-------8------|');
-    const expected =   '-----x----------y-----------z-|';
-    const subs =       '^                             !';
-    const t =     time('-----|');
+    const expected = '-----x----------y-----------z-|';
+    const subs = '^                             !';
+    const t = time('-----|');
     const values = {
       x: ['1', '2', '3'],
       y: ['4', '5', '6', '7'],
@@ -104,9 +104,9 @@ describe('Observable.prototype.rateLimit', () => {
     //                                  xx----------
     //                        ----------            ----------
     const source = hot('1--^--2-3---------4----|');
-    const expected =      '-------------x-----------(y|)';
-    const subs =          '^                        !';
-    const t =     time('----------|');
+    const expected = '-------------x-----------(y|)';
+    const subs = '^                        !';
+    const t = time('----------|');
     const values = {
       x: ['2', '3'],
       y: ['4'],
@@ -120,9 +120,9 @@ describe('Observable.prototype.rateLimit', () => {
     //                        -----     xx-----     ---|
     //                   -----     -----       -----
     const source = cold('1----------------2------------|');
-    const expected =    '-----x----------------y-------|';
-    const subs =        '^                             !';
-    const t =     time('-----|');
+    const expected = '-----x----------------y-------|';
+    const subs = '^                             !';
+    const t = time('-----|');
     const values = {
       x: ['1'],
       y: ['2'],
@@ -137,9 +137,9 @@ describe('Observable.prototype.rateLimit', () => {
     //                  x          ----------
     //                   ----------          ----------
     const source = hot('-1-2-3------4-5678-----9--|');
-    const expected =   '-x---------y---------z---------(i|)';
-    const subs =       '^                              !';
-    const t =     time('----------|');
+    const expected = '-x---------y---------z---------(i|)';
+    const subs = '^                              !';
+    const t = time('----------|');
     const values = {
       x: ['1'],
       y: ['2', '3'],
@@ -155,9 +155,9 @@ describe('Observable.prototype.rateLimit', () => {
     //                  x-----     x     -----
     //                        ----- xx---     -----
     const source = hot('-12-3-------4-567-8--9----|');
-    const expected =   '-x----y-----z----i----j---|';
-    const subs =       '^                         !';
-    const t =     time('-----|');
+    const expected = '-x----y-----z----i----j---|';
+    const subs = '^                         !';
+    const t = time('-----|');
     const values = {
       x: ['1'],
       y: ['2', '3'],
@@ -172,9 +172,9 @@ describe('Observable.prototype.rateLimit', () => {
 
   it('should complete when the source is empty when asap mode enabled', () => {
     const source = hot('--|');
-    const expected =   '--|';
-    const subs =       '^ !';
-    const t =     time('----------|');
+    const expected = '--|';
+    const subs = '^ !';
+    const t = time('----------|');
 
     expectObservable(source.rateLimit(5, t, true, rxTestScheduler)).toBe(expected);
     expectSubscriptions(source.subscriptions).toBe(subs);

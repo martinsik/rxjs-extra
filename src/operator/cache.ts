@@ -1,13 +1,14 @@
-import { Observable } from 'rxjs/Observable';
-import { Scheduler as Scheduler } from 'rxjs/Scheduler';
-import { async as asyncScheduler } from 'rxjs/scheduler/async';
+import {Observable} from 'rxjs/Observable';
+import {Scheduler as Scheduler} from 'rxjs/Scheduler';
+import {async as asyncScheduler} from 'rxjs/scheduler/async';
 import 'rxjs/add/operator/publishReplay';
 import 'rxjs/add/operator/take';
 import '../add/operator/takeWhileInclusive';
 
 
 class CaughtError {
-  constructor(public error: any) {}
+  constructor(public error: any) {
+  }
 }
 
 export enum CacheMode {
@@ -35,35 +36,35 @@ export function cache<T>(this: Observable<T>, windowTime: number, options: Cache
 
   if (options.mode === CacheMode.SilentRefresh) {
     observable = observable
-        .timestamp(scheduler)
-        .publishReplay(1, Number.POSITIVE_INFINITY, scheduler)
-        .refCount()
-        .takeWhileInclusive((item, i) => {
-          if (i === 0) { // check only the first item whether it's still valid
-            return getNow(scheduler) > item.timestamp + windowTime;
-          }
-          // the second item always needs to be the last one
-          return false;
-        })
-        .filter((item, i) => i === 0) // always pass only the first item
-        .map(item => item.value);
+      .timestamp(scheduler)
+      .publishReplay(1, Number.POSITIVE_INFINITY, scheduler)
+      .refCount()
+      .takeWhileInclusive((item, i) => {
+        if (i === 0) { // check only the first item whether it's still valid
+          return getNow(scheduler) > item.timestamp + windowTime;
+        }
+        // the second item always needs to be the last one
+        return false;
+      })
+      .filter((item, i) => i === 0) // always pass only the first item
+      .map(item => item.value);
 
   } else if (options.mode === CacheMode.TolerateExpired) {
     observable = observable
-        .timestamp(scheduler)
-        .publishReplay(1, Number.POSITIVE_INFINITY, scheduler)
-        .refCount()
-        .takeWhileInclusive(item => {
-          // check whether the cached item is still valid
-          return getNow(scheduler) > item.timestamp + windowTime;
-        })
-        .map(item => item.value);
+      .timestamp(scheduler)
+      .publishReplay(1, Number.POSITIVE_INFINITY, scheduler)
+      .refCount()
+      .takeWhileInclusive(item => {
+        // check whether the cached item is still valid
+        return getNow(scheduler) > item.timestamp + windowTime;
+      })
+      .map(item => item.value);
 
   } else {
     observable = observable
-        .publishReplay(1, windowTime, scheduler)
-        .refCount()
-        .take(1);
+      .publishReplay(1, windowTime, scheduler)
+      .refCount()
+      .take(1);
   }
 
   if (options.catchErrors) {
