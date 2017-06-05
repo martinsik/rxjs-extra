@@ -20,5 +20,9 @@
     "test",
     "dist",
     "node_modules"
+  ],
+  "files": [
+    "src/RxPlus.ts"
   ]
+
 }
