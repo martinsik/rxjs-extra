@@ -1,4 +1,5 @@
-import {Operator, Observable, Subscriber, Subscription, Scheduler} from 'rxjs';
+import {Operator, Subscriber, Subscription, Scheduler} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {PartialObserver} from 'rxjs/Observer';
 import {Action} from 'rxjs/scheduler/Action';
 import {Scheduler as SchedulerI} from 'rxjs/Scheduler';

@@ -1,20 +1,15 @@
-import {Observable, Operator, Subscriber} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
+import {Operator} from 'rxjs/Operator';
+import {Subscriber} from 'rxjs/Subscriber';
 import {Scheduler as IScheduler} from 'rxjs/Scheduler';
-
+import 'rxjs/add/observable/from';
 
 export function endWith<T>(this: Observable<T>, ...values: Array<IScheduler | T>): Observable<T> {
-  // check if the last parameter is a Scheduler
-  const len = values.length;
-  let scheduler = null;
-  if (values[len - 1] instanceof IScheduler) {
-    scheduler = values[len - 1];
-    values.pop();
-  }
-  return this.lift(new EndWithOperator(values, scheduler));
+  return this.lift(new EndWithOperator(values));
 }
 
 class EndWithOperator<T> implements Operator<T, T> {
-  constructor(private values: T[], private scheduler?: IScheduler) {
+  constructor(private values: T[]) {
   }
 
   call(subscriber: Subscriber<T>, source: any) {

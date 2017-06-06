@@ -3,6 +3,11 @@ import {Scheduler as Scheduler} from 'rxjs/Scheduler';
 import {async as asyncScheduler} from 'rxjs/scheduler/async';
 import 'rxjs/add/operator/publishReplay';
 import 'rxjs/add/operator/take';
+import 'rxjs/add/operator/timestamp';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/filter';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/observable/of';
 import '../add/operator/takeWhileInclusive';
 
 

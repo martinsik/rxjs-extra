@@ -1,10 +1,14 @@
-import {Operator, Observable, Subscriber, Subscription, Scheduler} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
+import {Operator} from 'rxjs/Operator';
+import {Subscriber} from 'rxjs/Subscriber';
+import {Subscription} from 'rxjs/Subscription';
+import {async} from 'rxjs/scheduler/async';
 import {PartialObserver} from 'rxjs/Observer';
 import {Action} from 'rxjs/scheduler/Action';
 import {Scheduler as SchedulerI} from 'rxjs/Scheduler';
 
 
-export function rateLimit<T>(this: Observable<T>, count: number, timeWindow: number, emitAsap: boolean = false, scheduler: SchedulerI = Scheduler.async): Observable<T[]> {
+export function rateLimit<T>(this: Observable<T>, count: number, timeWindow: number, emitAsap: boolean = false, scheduler: SchedulerI = async): Observable<T[]> {
   return this.lift(new RateLimitOperator(count, timeWindow, emitAsap, scheduler));
 }
 

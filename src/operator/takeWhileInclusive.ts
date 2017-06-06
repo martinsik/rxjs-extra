@@ -1,4 +1,6 @@
-import {Operator, Observable, Subscriber} from 'rxjs';
+import {Operator} from 'rxjs/Operator';
+import {Subscriber} from 'rxjs/Subscriber';
+import {Observable} from 'rxjs/Observable';
 
 
 export function takeWhileInclusive<T>(this: Observable<T>, predicate: (value: T, index: number) => boolean): Observable<T> {
