@@ -130,7 +130,7 @@ describe('Observable.prototype.endWith', () => {
     const e1subs = '^    !';
     const expected = '--a--(x|)';
 
-    expectObservable(e1.endWith(endWithValue, rxTestScheduler)).toBe(expected);
+    expectObservable(e1.endWith(endWithValue)).toBe(expected);
     expectSubscriptions(e1.subscriptions).toBe(e1subs);
   });
 
@@ -139,21 +139,21 @@ describe('Observable.prototype.endWith', () => {
     const e1subs = '^       !';
     const expected = '-----a--(yz|)';
 
-    expectObservable(e1.endWith('y', 'z', rxTestScheduler)).toBe(expected);
+    expectObservable(e1.endWith('y', 'z')).toBe(expected);
     expectSubscriptions(e1.subscriptions).toBe(e1subs);
   });
 
   it('should dispose the source properly before endWith when using a scheduler', (done) => {
     Observable.of(42)
       .finally(done)
-      .endWith<number | string>(endWithValue, rxTestScheduler)
+      .endWith<number | string>(endWithValue)
       .subscribe(() => {
       });
   });
 
   it('should dispose the source properly after endWith when using a scheduler', (done) => {
     Observable.of(42)
-      .endWith<number | string>(endWithValue, rxTestScheduler)
+      .endWith<number | string>(endWithValue)
       .finally(done)
       .subscribe(() => {
       });
