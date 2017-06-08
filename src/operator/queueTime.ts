@@ -48,51 +48,35 @@ class QueueTimeSubscriber<T> extends Subscriber<T> {
   }
 
   private scheduleBufferEmission(time: number) {
-    const {destination, delay, buffer, scheduler} = this;
+    const {destination, delay, buffer} = this;
 
     const state: QueueTimeScheduledState<T> = {
       delay,
       destination,
       buffer,
-      scheduler: this.scheduler,
-      clear: this.clearScheduledAction.bind(this),
-      isStopped: this.checkStopped.bind(this),
-      storeLastEmissionTime: this.storeLastEmissionTime.bind(this),
-      complete: this.doComplete.bind(this)
+      context: this,
     };
 
-    this.scheduledAction = scheduler.schedule(this.emitScheduledBuffer, time, state);
+    this.scheduledAction = this.scheduler.schedule(this.emitScheduledBuffer, time, state);
   }
 
   private emitScheduledBuffer(state: QueueTimeScheduledState<T>): void {
-    const {destination, delay, buffer, clear, isStopped, storeLastEmissionTime, scheduler, complete} = state;
+    const {destination, delay, buffer, context} = state;
 
     destination.next(buffer.shift());
 
-    if (isStopped() && buffer.length === 0) {
-      complete();
+    if (context.isStopped && buffer.length === 0) {
+      context.doComplete();
       return;
     }
 
-    storeLastEmissionTime(scheduler.now());
+    context.lastEmissionTime = context.scheduler.now();
 
     if (buffer.length === 0) {
-      clear();
+      context.scheduledAction = null;
     } else {
       (<Action<QueueTimeScheduledState<T>>>(<any>this)).schedule(state, delay);
     }
-  }
-
-  private checkStopped(): boolean {
-    return this.isStopped;
-  }
-
-  private storeLastEmissionTime(now): void {
-    this.lastEmissionTime = now;
-  }
-
-  private clearScheduledAction(): void {
-    this.scheduledAction = null;
   }
 
   private doComplete() {
@@ -110,9 +94,5 @@ type QueueTimeScheduledState<T> = {
   delay: number;
   destination: PartialObserver<T>;
   buffer: T[];
-  scheduler: SchedulerI;
-  clear: Function;
-  isStopped: Function;
-  storeLastEmissionTime: Function;
-  complete: Function;
+  context: QueueTimeSubscriber<T>;
 }

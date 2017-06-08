@@ -12,7 +12,7 @@ declare const rxTestScheduler: Rx.TestScheduler;
 
 const Observable = Rx.Observable;
 
-describe('Observable.prototype.endWith', () => {
+describe('Observable.prototype.queueTime', () => {
 
   asDiagram("queueTime(50)")("should make equal delays between emissions", () => {
     //                  x-----     xx-----     -----
