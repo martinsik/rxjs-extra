@@ -11,6 +11,7 @@
 const Observable = require('rxjs/Observable').Observable;
 require('rxjs/add/observable/defer');
 require('rxjs/add/observable/of');
+require('rxjs/add/operator/delay');
 const CacheMode = require('../dist/cjs/operator/cache').CacheMode;
 require('../dist/cjs/add/operator/cache');
 

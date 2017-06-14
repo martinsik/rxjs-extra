@@ -168,12 +168,18 @@ describe('Observable.prototype.cache', () => {
     const t = time('-----|');
     const source = createSource().cache(t, opts, rxTestScheduler);
 
-    //                  a -----
-    //                  b      -----
-    const notifier = hot('------1---');
-    const expected1 = '-a----a---';
+    //                       -----     -----     -----
+    //                            -----     -----
+    const subscriber1 = hot('-(1|)').mergeMapTo(source);
+    const expected1 =       '--(a|)';
+    const subscriber2 = hot('--------(2|)').mergeMapTo(source);
+    const expected2 =       '--------a|';
+    const subscriber3 = hot('------------------(3|)').mergeMap(() => source);
+    const expected3 =       '------------------b|';
 
-    expectObservable(source.repeatWhen(() => notifier)).toBe(expected1);
+    expectObservable(subscriber1).toBe(expected1);
+    expectObservable(subscriber2).toBe(expected2);
+    expectObservable(subscriber3).toBe(expected3);
   });
 
 });
