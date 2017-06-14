@@ -3,13 +3,21 @@
 # rxjs-plus
 Collection of additional RxJS 5 operators
 
-# Operators
+- [`cache`](https://github.com/martinsik/rxjs-plus#cachewindowtime-number-options-cacheoptions---scheduler-scheduler) 
+- [`endWith`](https://github.com/martinsik/rxjs-plus#endwithvalues-arrayt)
+- [`queueTime`](https://github.com/martinsik/rxjs-plus#queuetimedelay-number-scheduler-scheduler) 
+- [`rateLimit`](https://github.com/martinsik/rxjs-plus#ratelimitcount-number-timewindow-number-emitasap-boolean--false-scheduler-scheduler)
+- [`takeWhileInclusive`](https://github.com/martinsik/rxjs-plus#takewhileinclusivepredicate-value-t-index-number--boolean) 
 
-## `cache(windowTime: number, options: CacheOptions = {}, scheduler?: Scheduler)`
+# List of operators
 
-Operator that stores replays its cached value for a period of time. It works in three different modes:
+### `cache(windowTime: number, options: CacheOptions = {}, scheduler?: Scheduler)`
 
-- `Default` - This is equivalent of using the following chain of operators:
+Operator that stores and replays its cached value for a period of time.
+
+This operator works in three different modes:
+
+- `Default` - This is equivalent of using the following operator chain:
 
    ```
    source.publishReplay(1, windowTime)
@@ -18,11 +26,11 @@ Operator that stores replays its cached value for a period of time. It works in 
    ```
    See demo: [`demo/cache.js`](https://github.com/martinsik/rxjs-plus/blob/master/demo/cache.js)
 
-- `TolerateExpired` - The operators emits one or two items depending on whether the currently cached item is expired:
+- `TolerateExpired` - The operators emits one or two items depending on whether the currently cached item has expired:
 
    - When the cached item is still fresh it works just like in the `Default` mode. The cache item is emitted and the operators completes immediately.
    
-   - When the cached item is already expired it emits it anyway immediately but at also subscribes to the source Observable that is supposed to emit another fresh item that is stored by the operator instead of the expired one. This means that in this case the operator emits two items, the old one and then the new one. The complete notification is sent right after the new fresh item is emitted.
+   - When the cached item is already expired it emits it anyway immediately but at also subscribes to the source Observable that is supposed to emit another fresh item that is stored by the operator instead of the expired one. This means that in this case the operator emits two items, the old one and then the new one. The complete notification is sent after the new item is emitted.
    
    See demo: [`demo/cache_tolerate_expired.js`](https://github.com/martinsik/rxjs-plus/blob/master/demo/cache_tolerate_expired.js)
 
@@ -30,13 +38,15 @@ Operator that stores replays its cached value for a period of time. It works in 
  
    - When it's not expired it's emitted and the operator send complete notification immediately.
    
-   - When its already expired it'll subscribe to its source and wait until it produces a new item that is stored instead of the expired one. However, the new item is not sent to the observer and is silently surpressed. The operator sends complete notification only after the new item is received from the source Observable.
+   - When its already expired the operator will subscribe to its source Observable and wait until it produces a new item that is stored instead of the expired one. However, the new item is not sent to the observer and is silently surpressed. The operator sends complete notification only after the new item is received from the source Observable.
    
-   See demos: [`demo/cache_silent_refresh.js`](https://github.com/martinsik/rxjs-plus/blob/master/demo/cache_silent_refresh.js) and [`cache_silent_refresh_02.js`](https://github.com/martinsik/rxjs-plus/blob/master/demo/cache_silent_refresh_02.js).
+   See demos: [`demo/cache_silent_refresh.js`](https://github.com/martinsik/rxjs-plus/blob/master/demo/cache_silent_refresh.js) and [`demo/cache_silent_refresh_02.js`](https://github.com/martinsik/rxjs-plus/blob/master/demo/cache_silent_refresh_02.js).
 
-## `endWith(...values: Array<T>)`
+For detailed explanation how caching with RxJS can be implemented have a look at *"Caching HTTP responses"* in the StackOverflow Documentation: https://stackoverflow.com/documentation/rxjs/8247/common-recipes/26490/caching-http-responses 
 
-Emits a sequence of values after the source Observables emits a complete notification.
+### `endWith(...values: Array<T>)`
+
+Emits a sequence of values after the source Observables completes.
 
 ![endWith](https://raw.githubusercontent.com/martinsik/rxjs-plus/master/doc/endWith.png "The endWith() operator")
 
@@ -49,16 +59,16 @@ source.concat(Observable.of('a', 'b', 'c'));
 
 However, the `endWith()` operator has much better performance than using `concat()` and `Observable.of()`.
 
-## `queueTime(delay: number, scheduler?: Scheduler)`
+### `queueTime(delay: number, scheduler?: Scheduler)`
 
 ![queueTime](https://raw.githubusercontent.com/martinsik/rxjs-plus/master/doc/queueTime.png "The queueTime() operator")
 
-## `rateLimit(count: number, timeWindow: number, emitAsap: boolean = false, scheduler?: Scheduler)`
+### `rateLimit(count: number, timeWindow: number, emitAsap: boolean = false, scheduler?: Scheduler)`
 
 ![rateLimit](https://raw.githubusercontent.com/martinsik/rxjs-plus/master/doc/rateLimit.png "The rateLimit() operator")
 
 
-## `takeWhileInclusive(predicate: (value: T, index: number) => boolean)`
+### `takeWhileInclusive(predicate: (value: T, index: number) => boolean)`
 
 ![takeWhileInclusive](https://raw.githubusercontent.com/martinsik/rxjs-plus/master/doc/takeWhileInclusive.png "The takeWhileInclusive() operator")
 
