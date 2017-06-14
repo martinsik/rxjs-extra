@@ -4,7 +4,7 @@ import {Subscriber} from 'rxjs/Subscriber';
 import {Scheduler as IScheduler} from 'rxjs/Scheduler';
 import 'rxjs/add/observable/from';
 
-export function endWith<T>(this: Observable<T>, ...values: Array<IScheduler | T>): Observable<T> {
+export function endWith<T>(this: Observable<T>, ...values: Array<T>): Observable<T> {
   return this.lift(new EndWithOperator(values));
 }
 
@@ -18,23 +18,21 @@ class EndWithOperator<T> implements Operator<T, T> {
 }
 
 class EndWithSubscriber<T> extends Subscriber<T> {
-  constructor(destination: Subscriber<T>, private values: T[], private scheduler?: IScheduler) {
+  constructor(destination: Subscriber<T>, private values: T[]) {
     super(destination);
   }
 
   protected _complete() {
-    const {destination, values, scheduler} = this;
+    const {destination, values} = this;
 
-    if (scheduler) {
-      Observable.from(values, scheduler).subscribe(destination);
-    } else {
-      const len = values.length;
+    // @todo: Implement usign a custom Scheduler similarly to `Observable.from()`?
 
-      for (let i = 0; i < len; i++) {
-        destination.next(values[i]);
-      }
+    const len = values.length;
 
-      super._complete();
+    for (let i = 0; i < len; i++) {
+      destination.next(values[i]);
     }
+
+    super._complete();
   }
 }
