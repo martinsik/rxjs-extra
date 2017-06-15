@@ -18,7 +18,7 @@ const expectedRateLimitMarbles =     '------------x-----------------y-----------
 //                                      xxxxxxxxxx--------            ----------
 const expectedRateLimitAsapMarbles = '--x---------y---------z---------i---------(j|)';
 //                                      xxxx----------xxxxxxxxxx----------xxxxxxxxxx----------
-const expectedBufferTimeMarbles =    '----------------x-------------------y---------z---------(i|)';
+const expectedBufferTimeMarbles =    '------x-----------------------------y---------z---------(i|)';
 
 const values1 = {
     x: ['1', '2', '3'],
@@ -50,7 +50,11 @@ scheduler.expectObservable(source2.do(null, null, () => console.log('complete2')
 source3 = scheduler.createHotObservable(inputMarbles)
     .bufferTime(t, null, 3, scheduler)
     .filter(array => array.length !== 0)
-    .concatMap(buffer => Observable.of(buffer).delay(t, scheduler));
+    .concatMap((buffer, i) => i === 0
+        ? Observable.of(buffer)
+        : Observable.of(buffer).delay(t, scheduler)
+    );
+
 scheduler.expectObservable(source3.do(null, null, () => console.log('complete3'))).toBe(expectedBufferTimeMarbles, values3);
 
 scheduler.flush();
