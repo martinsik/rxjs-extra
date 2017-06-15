@@ -170,12 +170,12 @@ describe('Observable.prototype.cache', () => {
 
     //                       -----     -----     -----
     //                            -----     -----
-    const subscriber1 = hot('-(1|)').mergeMapTo(source);
-    const expected1 =       '--(a|)';
-    const subscriber2 = hot('--------(2|)').mergeMapTo(source);
-    const expected2 =       '--------a|';
-    const subscriber3 = hot('------------------(3|)').mergeMap(() => source);
-    const expected3 =       '------------------b|';
+    const subscriber1 = hot('-(1|)                 ').mergeMapTo(source);
+    const expected1 =       '--(a|)                ';
+    const subscriber2 = hot('--------(2|)          ').mergeMapTo(source);
+    const expected2 =       '--------a|            ';
+    const subscriber3 = hot('------------------(3|)').mergeMapTo(source);
+    const expected3 =       '------------------b|  ';
 
     expectObservable(subscriber1).toBe(expected1);
     expectObservable(subscriber2).toBe(expected2);
