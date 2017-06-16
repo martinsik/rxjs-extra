@@ -1,6 +1,6 @@
 {
   "name": "rxjs-extra",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Collection of extra operators for RxJS 5",
   "main": "RxPlus.js",
   "scripts": {
@@ -20,7 +20,7 @@
     "spec_apply_patches": "patch test/helpers/testScheduler-ui.ts spec-patch/testScheduler-ui.ts.patch && patch test/helpers/marble-testing.ts spec-patch/marble-testing.ts.patch && patch test/helpers/test-helper.ts spec-patch/test-helper.ts.patch && patch test/helpers/tests2png/diagram-test-runner.js spec-patch/tests2png/diagram-test-runner.js.patch",
     "spec_clean": "rm -rf .rxjs-spec && rm -f test/helpers/*.ts && rm -fr test/helpers/tests2png",
     "spec_setup": "npm run spec_clean && npm run spec_download_helpers && npm run spec_helper_fix_crlf && npm run spec_apply_patches",
-    "test_build_cjs_run": "npm run build_cjs && npm run test_build && npm run test",
+    "test_build_cjs_run": "npm run build_cjs && npm run test_build_run",
     "test_build_cjs": "npm run build_cjs && npm run test_build",
     "test_build_run": "npm run test_build && npm run test",
     "test_build": "npm run clean_test && tsc -p test/tsconfig.json",

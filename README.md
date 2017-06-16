@@ -1,6 +1,7 @@
 [![Build Status](https://travis-ci.org/martinsik/rxjs-extra.svg?branch=master)](https://travis-ci.org/martinsik/rxjs-extra)
 
 # rxjs-extra
+
 Collection of extra RxJS 5 operators:
 
 - [`cache`](https://github.com/martinsik/rxjs-extra#cachewindowtime-number-options-cacheoptions---scheduler-scheduler) 
@@ -8,6 +9,40 @@ Collection of extra RxJS 5 operators:
 - [`queueTime`](https://github.com/martinsik/rxjs-extra#queuetimedelay-number-scheduler-scheduler) 
 - [`rateLimit`](https://github.com/martinsik/rxjs-extra#ratelimitcount-number-timewindow-number-emitasap-boolean--false-scheduler-scheduler)
 - [`takeWhileInclusive`](https://github.com/martinsik/rxjs-extra#takewhileinclusivepredicate-value-t-index-number--boolean) 
+
+# Usage
+
+Install `rxjs-extra` via `npm`:
+
+```
+npm install rxjs-extra
+```
+
+The general usage is the same as with RxJS 5. This means you need to manually include operators you want to use:
+
+In TypeScript for example:
+
+```
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/range';
+import 'rxjs-extra/add/operator/endWith';
+
+Observable.range(1, 3)
+  .endWith<number | string>('a', 'b', 'c')
+  .subscribe(console.log);
+```
+
+In ES6 in `node` environment for example:
+
+```
+const Observable = require('rxjs/Observable').Observable;
+require('rxjs/add/observable/range');
+require('rxjs-extra/add/operator/endWith');
+
+Observable.range(1, 3)
+    .endWith('a', 'b', 'c')
+    .subscribe(console.log);
+```
 
 # List of operators
 
@@ -77,6 +112,7 @@ These two operator chains are equivalent:
 
 ```
 source.endWith('a', 'b', 'c')
+
 source.concat(Observable.of('a', 'b', 'c'))
 ```
 
@@ -197,7 +233,7 @@ This repository uses the same `mocha` testing helpers as RxJS 5 including render
 
 To run the tests this repo needs to download the RxJS 5 archive, unpack it, copy helper scripts and patch them by [files from `spec-patch`](https://github.com/martinsik/rxjs-extra/tree/master/spec-patch).
 
-In order to run tests do the following tests:
+This is done automatically by running `npm run spec-setup` script. The workflow is then as follows:
 
 ```
 $ clone https://github.com/martinsik/rxjs-extra
