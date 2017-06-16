@@ -1,6 +1,6 @@
 {
-  "name": "rxjs-plus",
-  "version": "0.0.1",
+  "name": "rxjs-extra",
+  "version": "0.1.0",
   "description": "Collection of extra operators for RxJS 5",
   "main": "RxPlus.js",
   "scripts": {
@@ -29,7 +29,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/martinsik/rxjs-extra-operators.git"
+    "url": "git+https://github.com/martinsik/rxjs-extra.git"
   },
   "keywords": [
     "rxjs",
@@ -38,9 +38,9 @@
   "author": "Martin Sikora",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/martinsik/rxjs-extra-operators/issues"
+    "url": "https://github.com/martinsik/rxjs-extra/issues"
   },
-  "homepage": "https://github.com/martinsik/rxjs-extra-operators#readme",
+  "homepage": "https://github.com/martinsik/rxjs-extra#readme",
   "devDependencies": {
     "@types/chai": "^3.4.35",
     "@types/lodash": "^4.14.53",

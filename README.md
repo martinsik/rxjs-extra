@@ -1,23 +1,27 @@
-[![Build Status](https://travis-ci.org/martinsik/rxjs-plus.svg?branch=master)](https://travis-ci.org/martinsik/rxjs-plus)
+[![Build Status](https://travis-ci.org/martinsik/rxjs-extra.svg?branch=master)](https://travis-ci.org/martinsik/rxjs-extra)
 
-# rxjs-plus
-Collection of additional RxJS 5 operators
+# rxjs-extra
+Collection of extra RxJS 5 operators:
 
-- [`cache`](https://github.com/martinsik/rxjs-plus#cachewindowtime-number-options-cacheoptions---scheduler-scheduler) 
-- [`endWith`](https://github.com/martinsik/rxjs-plus#endwithvalues-arrayt)
-- [`queueTime`](https://github.com/martinsik/rxjs-plus#queuetimedelay-number-scheduler-scheduler) 
-- [`rateLimit`](https://github.com/martinsik/rxjs-plus#ratelimitcount-number-timewindow-number-emitasap-boolean--false-scheduler-scheduler)
-- [`takeWhileInclusive`](https://github.com/martinsik/rxjs-plus#takewhileinclusivepredicate-value-t-index-number--boolean) 
+- [`cache`](https://github.com/martinsik/rxjs-extra#cachewindowtime-number-options-cacheoptions---scheduler-scheduler) 
+- [`endWith`](https://github.com/martinsik/rxjs-extra#endwithvalues-arrayt)
+- [`queueTime`](https://github.com/martinsik/rxjs-extra#queuetimedelay-number-scheduler-scheduler) 
+- [`rateLimit`](https://github.com/martinsik/rxjs-extra#ratelimitcount-number-timewindow-number-emitasap-boolean--false-scheduler-scheduler)
+- [`takeWhileInclusive`](https://github.com/martinsik/rxjs-extra#takewhileinclusivepredicate-value-t-index-number--boolean) 
 
 # List of operators
 
-#### `cache(windowTime: number, options: CacheOptions = {}, scheduler?: Scheduler)`
+## cache
+
+```
+cache(windowTime: number, options: CacheOptions = {}, scheduler?: Scheduler)
+```
 
 Operator that stores and replays its cached value for a period of time.
 
 This operator works in three different modes:
 
-- `Default` - The default behavior that just replays the cached value:
+- `Default` - The default behavior that just stores and replays the cached value for a period of time:
   
    ```
    source.cache(1000)
@@ -31,7 +35,7 @@ This operator works in three different modes:
      .take(1)
    ```
       
-   See demo: [`demo/cache.js`](https://github.com/martinsik/rxjs-plus/blob/master/demo/cache.js)
+   See demo: [`demo/cache.js`](https://github.com/martinsik/rxjs-extra/blob/master/demo/cache.js)
 
 - `TolerateExpired` - The operators emits one or two items depending on whether the currently cached item has expired:
 
@@ -43,7 +47,7 @@ This operator works in three different modes:
    
    - When the cached item is already expired it emits it anyway immediately but at also subscribes to the source Observable that is supposed to emit another fresh item that is stored by the operator instead of the expired one. This means that in this case the operator emits two items, the old one and then the new one. The complete notification is sent after the new item is emitted.
    
-   See demo: [`demo/cache_tolerate_expired.js`](https://github.com/martinsik/rxjs-plus/blob/master/demo/cache_tolerate_expired.js)
+   See demo: [`demo/cache_tolerate_expired.js`](https://github.com/martinsik/rxjs-extra/blob/master/demo/cache_tolerate_expired.js)
 
 - `SilentRefresh` - The operator emits always only the current one item no matter whether it has already expired or not:
  
@@ -55,15 +59,19 @@ This operator works in three different modes:
    
    - When its already expired the operator will subscribe to its source Observable and wait until it produces a new item that is stored instead of the expired one. However, the new item is not sent to the observer and is silently surpressed. The operator sends complete notification only after the new item is received from the source Observable.
    
-   See demos: [`demo/cache_silent_refresh.js`](https://github.com/martinsik/rxjs-plus/blob/master/demo/cache_silent_refresh.js) and [`demo/cache_silent_refresh_02.js`](https://github.com/martinsik/rxjs-plus/blob/master/demo/cache_silent_refresh_02.js).
+   See demos: [`demo/cache_silent_refresh.js`](https://github.com/martinsik/rxjs-extra/blob/master/demo/cache_silent_refresh.js) and [`demo/cache_silent_refresh_02.js`](https://github.com/martinsik/rxjs-extra/blob/master/demo/cache_silent_refresh_02.js).
 
 For detailed explanation how caching with RxJS can be implemented have a look at *"[Caching HTTP responses](https://stackoverflow.com/documentation/rxjs/8247/common-recipes/26490/caching-http-responses)"* in the StackOverflow Documentation.
 
-#### `endWith(...values: Array<T>)`
+## endWith
+
+```
+endWith(...values: Array<T>)
+```
 
 Emits a sequence of values after the source Observables completes.
 
-![endWith](https://raw.githubusercontent.com/martinsik/rxjs-plus/master/doc/endWith.png "The endWith() operator")
+![endWith](https://raw.githubusercontent.com/martinsik/rxjs-extra/master/doc/endWith.png "The endWith() operator")
 
 These two operator chains are equivalent:
 
@@ -74,13 +82,17 @@ source.concat(Observable.of('a', 'b', 'c'))
 
 However, the `endWith()` operator has much better performance than using `concat()` and `Observable.of()`.
 
-See demo [`demo/endWith.js`](https://github.com/martinsik/rxjs-plus/blob/master/demo/endWith.js) for typical usage example or see this operator compared with `concat` using marble tests [`demo/endWith_marbles.js`](https://github.com/martinsik/rxjs-plus/blob/master/demo/endWith_marbles.js).
+See demo [`demo/endWith.js`](https://github.com/martinsik/rxjs-extra/blob/master/demo/endWith.js) for typical usage example or see this operator compared with `concat` using marble tests [`demo/endWith_marbles.js`](https://github.com/martinsik/rxjs-extra/blob/master/demo/endWith_marbles.js).
 
-#### `queueTime(delay: number, scheduler?: Scheduler)`
+## queueTime
 
-Makes delays between emissions while trying to emit as soon as possible:
+```
+queueTime(delay: number, scheduler: SchedulerI = Scheduler.async)
+```
 
-![queueTime](https://raw.githubusercontent.com/martinsik/rxjs-plus/master/doc/queueTime.png "The queueTime() operator")
+Makes max `delay` delays between emissions while trying to emit as soon as possible:
+
+![queueTime](https://raw.githubusercontent.com/martinsik/rxjs-extra/master/doc/queueTime.png "The queueTime() operator")
 
 ```
 source.queueTime(1000)
@@ -109,13 +121,17 @@ queueTime(50)   --1----2----3-------4----5----6---------7-|
 
 Notice that with `queueTime()` items such as `1`, `4` and `7` are not delayed at all because the previous emission happened more than `50` time units ago. With `concatMap()` every item except the first one is delayed by the same amount of time. 
 
-See demos: [`demo/queueTime.js`](https://github.com/martinsik/rxjs-plus/blob/master/demo/queueTime.js), [`demo/queueTime_2.js`](https://github.com/martinsik/rxjs-plus/blob/master/demo/queueTime_2.js), [`demo/queueTime_3.js`](https://github.com/martinsik/rxjs-plus/blob/master/demo/queueTime_3.js) or see marble tests comparing `concatMap()` and `queueTime()` [`demo/queueTime_marbles.js`](https://github.com/martinsik/rxjs-plus/blob/master/demo/queueTime_marbles.js).
+See demos: [`demo/queueTime.js`](https://github.com/martinsik/rxjs-extra/blob/master/demo/queueTime.js), [`demo/queueTime_2.js`](https://github.com/martinsik/rxjs-extra/blob/master/demo/queueTime_2.js), [`demo/queueTime_3.js`](https://github.com/martinsik/rxjs-extra/blob/master/demo/queueTime_3.js) or see marble tests comparing `concatMap()` and `queueTime()` [`demo/queueTime_marbles.js`](https://github.com/martinsik/rxjs-extra/blob/master/demo/queueTime_marbles.js).
 
-#### `rateLimit(count: number, timeWindow: number, emitAsap: boolean = false, scheduler?: Scheduler)`
+## rateLimit
+
+```
+rateLimit(count: number, timeWindow: number, emitAsap: boolean = false, scheduler: Scheduler = async)
+```
 
 Buffer max `count` items for a period of `timeWindow` starting by the fist item received. 
 
-![rateLimit](https://raw.githubusercontent.com/martinsik/rxjs-plus/master/doc/rateLimit.png "The rateLimit() operator")
+![rateLimit](https://raw.githubusercontent.com/martinsik/rxjs-extra/master/doc/rateLimit.png "The rateLimit() operator")
 
 ```
 source.rateLimit(3, 1000)
@@ -151,16 +167,19 @@ rateLimit(3, 100, true)   --x---------y---------z---------i---------(j|)
 bufferTime(100, null, 3)  ------x-----------------------------y---------z---------(i|)
 ```
 
-The number of emissions and their values varies. For the complete example with values for each test case see [`demo/rateLimit_marble.js`](https://github.com/martinsik/rxjs-plus/blob/master/demo/rateLimit_marble.js).
+The number of emissions and their values varies. For the complete example with values for each test case see [`demo/rateLimit_marble.js`](https://github.com/martinsik/rxjs-extra/blob/master/demo/rateLimit_marble.js).
 
-See demos: [`demo/rateLimit.js`](https://github.com/martinsik/rxjs-plus/blob/master/demo/rateLimit.js) and [`demo/rateLimit_2.js`](https://github.com/martinsik/rxjs-plus/blob/master/demo/rateLimit_2.js).
+See demos: [`demo/rateLimit.js`](https://github.com/martinsik/rxjs-extra/blob/master/demo/rateLimit.js) and [`demo/rateLimit_2.js`](https://github.com/martinsik/rxjs-extra/blob/master/demo/rateLimit_2.js).
 
+## takeWhileInclusive
 
-#### `takeWhileInclusive(predicate: (value: T, index: number) => boolean)`
+```
+takeWhileInclusive(predicate: (value: T, index: number) => boolean)
+```
 
 Same as the [`takeWhile()`](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-takeWhile) operator but this implementation emits also the last item that didn't match the predicate function.
 
-![takeWhileInclusive](https://raw.githubusercontent.com/martinsik/rxjs-plus/master/doc/takeWhileInclusive.png "The takeWhileInclusive() operator")
+![takeWhileInclusive](https://raw.githubusercontent.com/martinsik/rxjs-extra/master/doc/takeWhileInclusive.png "The takeWhileInclusive() operator")
 
 ```
 Observable.range(1, 6)
@@ -170,19 +189,19 @@ Observable.range(1, 6)
 
 The preceding example will print numbers from `1` to `4` including.
 
-See demo: [`demo/takeWhileInclusive.js`](https://github.com/martinsik/rxjs-plus/blob/master/demo/takeWhileInclusive.js)
+See demo: [`demo/takeWhileInclusive.js`](https://github.com/martinsik/rxjs-extra/blob/master/demo/takeWhileInclusive.js)
 
 # Testing
 
 This repository uses the same `mocha` testing helpers as RxJS 5 including rendering marble diagrams.
 
-To run the tests this repo needs to download the RxJS 5 archive, unpack it, copy helper scripts and patch them by [files from `spec-patch`](https://github.com/martinsik/rxjs-plus/tree/master/spec-patch).
+To run the tests this repo needs to download the RxJS 5 archive, unpack it, copy helper scripts and patch them by [files from `spec-patch`](https://github.com/martinsik/rxjs-extra/tree/master/spec-patch).
 
 In order to run tests do the following tests:
 
 ```
-$ clone https://github.com/martinsik/rxjs-plus
-$ cd rxjs-plus
+$ clone https://github.com/martinsik/rxjs-extra
+$ cd rxjs-extra
 $ npm i
 $ npm run spec-setup && npm run test-build
 $ npm run test
