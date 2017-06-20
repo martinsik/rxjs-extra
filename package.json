@@ -32,8 +32,14 @@
     "url": "git+https://github.com/martinsik/rxjs-extra.git"
   },
   "keywords": [
-    "rxjs",
-    "rx"
+    "Rx",
+    "RxJS",
+    "ReactiveX",
+    "ReactiveExtensions",
+    "Streams",
+    "Observables",
+    "Observable",
+    "Stream"
   ],
   "author": "Martin Sikora",
   "license": "MIT",

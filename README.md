@@ -4,11 +4,11 @@
 
 Collection of extra RxJS 5 operators:
 
-- [`cache`](https://github.com/martinsik/rxjs-extra#cachewindowtime-number-options-cacheoptions---scheduler-scheduler) 
-- [`endWith`](https://github.com/martinsik/rxjs-extra#endwithvalues-arrayt)
-- [`queueTime`](https://github.com/martinsik/rxjs-extra#queuetimedelay-number-scheduler-scheduler) 
-- [`rateLimit`](https://github.com/martinsik/rxjs-extra#ratelimitcount-number-timewindow-number-emitasap-boolean--false-scheduler-scheduler)
-- [`takeWhileInclusive`](https://github.com/martinsik/rxjs-extra#takewhileinclusivepredicate-value-t-index-number--boolean) 
+- [`cache`](https://github.com/martinsik/rxjs-extra#cache) 
+- [`endWith`](https://github.com/martinsik/rxjs-extra#endwith)
+- [`queueTime`](https://github.com/martinsik/rxjs-extra#queuetime) 
+- [`rateLimit`](https://github.com/martinsik/rxjs-extra#ratelimit)
+- [`takeWhileInclusive`](https://github.com/martinsik/rxjs-extra#takewhileinclusive) 
 
 # Usage
 
@@ -43,6 +43,8 @@ Observable.range(1, 3)
     .endWith('a', 'b', 'c')
     .subscribe(console.log);
 ```
+
+Feel free to experiment with demos in the [`/demo`](https://github.com/martinsik/rxjs-extra/tree/master/demo) directory.
 
 # List of operators
 
@@ -224,6 +226,8 @@ Observable.range(1, 6)
 ```
 
 The preceding example will print numbers from `1` to `4` including.
+
+This operator has also been discussed in RxJS 5 in [ReactiveX/rxjs#2420](https://github.com/ReactiveX/rxjs/issues/2420).
 
 See demo: [`demo/takeWhileInclusive.js`](https://github.com/martinsik/rxjs-extra/blob/master/demo/takeWhileInclusive.js)
 
