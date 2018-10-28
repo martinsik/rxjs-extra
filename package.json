@@ -6,7 +6,7 @@
   "scripts": {
     "test": "mocha test-js",
     "mocha": "mocha",
-    "clean": "npm run spec_clean && npm run test_clean",
+    "clean": "npm run spec_clean && npm run clean_test",
     "clean_cjs": "rm -rf dist/cjs",
     "clean_es2015": "rm -rf dist/es2015",
     "clean_test": "rm -rf test-js",
@@ -24,7 +24,7 @@
     "test_build_cjs": "npm run build_cjs && npm run test_build",
     "test_build_run": "npm run test_build && npm run test",
     "test_build": "npm run clean_test && tsc -p test/tsconfig.json",
-    "test_full_rebuild": "npm run clean && npm run spec-setup && npm run test_build",
+    "test_full_rebuild": "npm run clean && npm run spec_setup && npm run test_build",
     "tests2png": "npm run test_build && mkdir -p tmp/docs/img && mocha --opts test/tests2png.opts test-js"
   },
   "repository": {
@@ -56,12 +56,11 @@
     "@types/sinon-chai": "^2.7.27",
     "chai": "^3.5.0",
     "color": "^1.0.3",
-    "dos2unix": "^1.1.2",
     "escape-string-regexp": "^1.0.5",
     "gm": "^1.23.0",
     "google-closure-compiler-js": "^20170521.0.0",
     "lodash": "^4.17.4",
-    "mocha": "^3.2.0",
+    "mocha": "^5.2.0",
     "normalize-newline-cli": "^1.1.0",
     "rollup": "^0.41.6",
     "sinon-chai": "^2.8.0",
