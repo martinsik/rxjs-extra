@@ -1,7 +1,6 @@
 import * as Rx from 'rxjs';
 import '../../dist/cjs/RxPlus';
-import {expect} from 'chai';
-import marbleTestingSignature = require('../helpers/marble-testing');
+import marbleTestingSignature = require('../helpers/marble-testing'); // tslint:disable-line:no-require-imports
 
 declare const {asDiagram, time};
 declare const hot: typeof marbleTestingSignature.hot;
@@ -131,7 +130,6 @@ describe('Observable.prototype.rateLimit', () => {
     expectObservable(source.rateLimit(5, t, false, rxTestScheduler)).toBe(expected, values);
     expectSubscriptions(source.subscriptions).toBe(subs);
   });
-
 
   it('should emit the first value immediately after receiving it when asap mode enabled', () => {
     //                  x          ----------

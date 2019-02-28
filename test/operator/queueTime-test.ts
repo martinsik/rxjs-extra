@@ -14,7 +14,7 @@ const Observable = Rx.Observable;
 
 describe('Observable.prototype.queueTime', () => {
 
-  asDiagram("queueTime(50)")("should make equal delays between emissions", () => {
+  asDiagram('queueTime(50)')('should make equal delays between emissions', () => {
     //                  x-----     xx-----     -----
     //                        -----       -----     -----
     const source = hot('-1--2--------3-45------6--|');

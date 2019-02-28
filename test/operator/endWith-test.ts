@@ -1,6 +1,5 @@
 import * as Rx from 'rxjs';
 import '../../dist/cjs/RxPlus';
-import {expect} from 'chai';
 import marbleTestingSignature = require('../helpers/marble-testing'); // tslint:disable-line:no-require-imports
 
 declare const {asDiagram};
@@ -17,7 +16,7 @@ describe('Observable.prototype.endWith', () => {
 
   const endWithValue = 'x';
 
-  asDiagram("endWith('d', 'e', 'f')")("should end Observable with values", () => {
+  asDiagram("endWith('d', 'e', 'f')")('should end Observable with values', () => {
     const source = cold('--a--b--c--|');
     const sub = '^          !';
     const expected = '--a--b--c--(def|)';
@@ -147,7 +146,8 @@ describe('Observable.prototype.endWith', () => {
     Observable.of(42)
       .finally(done)
       .endWith<number | string>(endWithValue)
-      .subscribe(() => {
+      .subscribe({
+        next: () => void 0
       });
   });
 
@@ -155,7 +155,8 @@ describe('Observable.prototype.endWith', () => {
     Observable.of(42)
       .endWith<number | string>(endWithValue)
       .finally(done)
-      .subscribe(() => {
+      .subscribe({
+        next: () => void 0
       });
   });
 

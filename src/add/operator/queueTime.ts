@@ -1,5 +1,5 @@
-import {Observable} from 'rxjs/Observable';
-import {queueTime} from '../../operator/queueTime';
+import { Observable } from 'rxjs/Observable';
+import { queueTime } from '../../operator/queueTime';
 
 Observable.prototype.queueTime = queueTime;
 

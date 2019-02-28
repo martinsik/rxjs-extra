@@ -74,7 +74,7 @@ describe('Observable.prototype.cache', () => {
     expectSubscriptions(source.subscriptions).toBe(e1sub);
   });
 
-  it("should emit when the source takes longer that the time window", () => {
+  it('should emit when the source takes longer that the time window', () => {
     const source = cold('---------a');
     const t = time('-----|');
     const cached = source.cache(t, null, rxTestScheduler);
@@ -85,7 +85,7 @@ describe('Observable.prototype.cache', () => {
     expectSubscriptions(source.subscriptions).toBe(e1sub);
   });
 
-  it("should emit the same value to multiple observers withing the same time window", () => {
+  it('should emit the same value to multiple observers withing the same time window', () => {
     const t = time('-----|');
     const cached = createSource().cache(t, null, rxTestScheduler);
     const e1 = '-(a|)';
@@ -100,7 +100,7 @@ describe('Observable.prototype.cache', () => {
     expectObservable(cached.repeatWhen(() => notifier)).toBe(e3);
   });
 
-  it("should emit the same error to multiple observers withing the same time window", () => {
+  it('should emit the same error to multiple observers withing the same time window', () => {
     const err = new Error();
     const t = time('-----|');
     const source = createSource()
@@ -119,7 +119,7 @@ describe('Observable.prototype.cache', () => {
     expectObservable(source).toBe(e2, undefined, err);
   });
 
-  it("should throw a single error when using catchErrors=false option", () => {
+  it('should throw a single error when using catchErrors=false option', () => {
     const err = new Error();
     const t = time('-----|');
     const source = createSource()
@@ -137,8 +137,8 @@ describe('Observable.prototype.cache', () => {
     expectObservable(source.repeatWhen(() => notifier)).toBe(expected1, undefined, err);
   });
 
-  it("should emit one or two items when tolerating the expired items", () => {
-    const opts = <CacheOptions>{mode: CacheMode.TolerateExpired};
+  it('should emit one or two items when tolerating the expired items', () => {
+    const opts = <CacheOptions> {mode: CacheMode.TolerateExpired};
     const t = time('-----|');
     const source = createSource().cache(t, opts, rxTestScheduler);
 
@@ -150,8 +150,8 @@ describe('Observable.prototype.cache', () => {
     expectObservable(source.repeatWhen(() => notifier)).toBe(expected1);
   });
 
-  it("should emit two items when tolerating the expired items", () => {
-    const opts = <CacheOptions>{mode: CacheMode.TolerateExpired};
+  it('should emit two items when tolerating the expired items', () => {
+    const opts = <CacheOptions> {mode: CacheMode.TolerateExpired};
     const t = time('-----|');
     const source = createSource().cache(t, opts, rxTestScheduler);
 
@@ -163,8 +163,8 @@ describe('Observable.prototype.cache', () => {
     expectObservable(source.repeatWhen(() => notifier)).toBe(expected1);
   });
 
-  it("should emit one item and silently refresh in silent mode", () => {
-    const opts = <CacheOptions>{mode: CacheMode.SilentRefresh};
+  it('should emit one item and silently refresh in silent mode', () => {
+    const opts = <CacheOptions> {mode: CacheMode.SilentRefresh};
     const t = time('-----|');
     const source = createSource().cache(t, opts, rxTestScheduler);
 

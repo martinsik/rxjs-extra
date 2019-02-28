@@ -36,7 +36,7 @@ describe('Observable.prototype.takeWhileInclusive', () => {
     const e1subs = '^             !';
     const expected = '--b--c--d--e--|';
 
-    expectObservable(e1.takeWhileInclusive(<any>(() => {
+    expectObservable(e1.takeWhileInclusive(<any> (() => {
       return {};
     }))).toBe(expected);
     expectSubscriptions(e1.subscriptions).toBe(e1subs);
@@ -160,7 +160,7 @@ describe('Observable.prototype.takeWhileInclusive', () => {
       throw 'error';
     }
 
-    expectObservable(e1.takeWhileInclusive(<any>predicate)).toBe(expected);
+    expectObservable(e1.takeWhileInclusive(<any> predicate)).toBe(expected);
     expectSubscriptions(e1.subscriptions).toBe(e1subs);
   });
 
