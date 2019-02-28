@@ -1,9 +1,9 @@
-import {Operator} from 'rxjs/Operator';
-import {Subscriber} from 'rxjs/Subscriber';
-import {Observable} from 'rxjs/Observable';
+import { Observable } from 'rxjs/Observable';
+import { Operator } from 'rxjs/Operator';
+import { Subscriber } from 'rxjs/Subscriber';
 
-
-export function takeWhileInclusive<T>(this: Observable<T>, predicate: (value: T, index: number) => boolean): Observable<T> {
+export function takeWhileInclusive<T>(
+  this: Observable<T>, predicate: (value: T, index: number) => boolean): Observable<T> {
   return this.lift(new TakeWhileInclusiveOperator(predicate));
 }
 
@@ -11,11 +11,13 @@ class TakeWhileInclusiveOperator<T> implements Operator<T, T> {
   constructor(private predicate: (value: T, index: number) => boolean) {
   }
 
-  call(subscriber: Subscriber<T>, source: any) {
+  public call(subscriber: Subscriber<T>, source: any) {
     return source.subscribe(new TakeWhileInclusiveSubscriber(subscriber, this.predicate));
   }
 }
 
+// TODO: Split it
+// tslint:disable-next-line:max-classes-per-file
 class TakeWhileInclusiveSubscriber<T> extends Subscriber<T> {
   private index: number = 0;
 

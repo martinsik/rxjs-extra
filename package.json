@@ -25,7 +25,9 @@
     "test_build_run": "npm run test_build && npm run test",
     "test_build": "npm run clean_test && tsc -p test/tsconfig.json",
     "test_full_rebuild": "npm run clean && npm run spec_setup && npm run test_build",
-    "tests2png": "npm run test_build && mkdir -p tmp/docs/img && mocha --opts test/tests2png.opts test-js"
+    "tests2png": "npm run test_build && mkdir -p tmp/docs/img && mocha --opts test/tests2png.opts test-js",
+    "lint": "tslint -c tslint.json 'src/**/*.ts'",
+    "lint_fix": "npm run lint -- --fix"
   },
   "repository": {
     "type": "git",
@@ -66,7 +68,8 @@
     "sinon-chai": "^2.8.0",
     "source-map-support": "^0.4.11",
     "symbol-observable": "^1.0.4",
-    "typescript": "^2.2.1",
+    "tslint": "^5.11.0",
+    "typescript": "^2.9.2",
     "webpack": "^2.4.1"
   },
   "dependencies": {

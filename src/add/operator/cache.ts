@@ -1,5 +1,5 @@
-import {Observable} from 'rxjs/Observable';
-import {cache} from '../../operator/cache';
+import { Observable } from 'rxjs/Observable';
+import { cache } from '../../operator/cache';
 
 Observable.prototype.cache = cache;
 

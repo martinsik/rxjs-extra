@@ -1,10 +1,9 @@
-import {Observable} from 'rxjs/Observable';
-import {Operator} from 'rxjs/Operator';
-import {Subscriber} from 'rxjs/Subscriber';
-import {Scheduler as IScheduler} from 'rxjs/Scheduler';
 import 'rxjs/add/observable/from';
+import { Observable } from 'rxjs/Observable';
+import { Operator } from 'rxjs/Operator';
+import { Subscriber } from 'rxjs/Subscriber';
 
-export function endWith<T>(this: Observable<T>, ...values: Array<T>): Observable<T> {
+export function endWith<T>(this: Observable<T>, ...values: T[]): Observable<T> {
   return this.lift(new EndWithOperator(values));
 }
 
@@ -12,18 +11,20 @@ class EndWithOperator<T> implements Operator<T, T> {
   constructor(private values: T[]) {
   }
 
-  call(subscriber: Subscriber<T>, source: any) {
+  public call(subscriber: Subscriber<T>, source: any) {
     return source.subscribe(new EndWithSubscriber(subscriber, this.values));
   }
 }
 
+// TODO: Split it
+// tslint:disable-next-line:max-classes-per-file
 class EndWithSubscriber<T> extends Subscriber<T> {
   constructor(destination: Subscriber<T>, private values: T[]) {
     super(destination);
   }
 
   protected _complete() {
-    const {destination, values} = this;
+    const { destination, values } = this;
 
     // @todo: Implement usign a custom Scheduler similarly to `Observable.from()`?
 
