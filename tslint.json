@@ -58,5 +58,6 @@
       "check-separator",
       "check-type"
     ]
-  }
+  },
+  "jsRules": true
 }

@@ -26,7 +26,7 @@
     "test_build": "npm run clean_test && tsc -p test/tsconfig.json",
     "test_full_rebuild": "npm run clean && npm run spec_setup && npm run test_build",
     "tests2png": "npm run test_build && mkdir -p tmp/docs/img && mocha --opts test/tests2png.opts test-js",
-    "lint": "tslint -c tslint.json 'src/**/*.ts'",
+    "lint": "tslint -c tslint.json 'src/**/*.ts' 'test/**/*.ts' 'demo/**/*.js'",
     "lint_fix": "npm run lint -- --fix"
   },
   "repository": {
