@@ -5,10 +5,8 @@
 Collection of extra RxJS 5 operators:
 
 - [`cache`](https://github.com/martinsik/rxjs-extra#cache) 
-- [`endWith`](https://github.com/martinsik/rxjs-extra#endwith)
 - [`queueTime`](https://github.com/martinsik/rxjs-extra#queuetime) 
 - [`rateLimit`](https://github.com/martinsik/rxjs-extra#ratelimit)
-- [`takeWhileInclusive`](https://github.com/martinsik/rxjs-extra#takewhileinclusive) 
 
 # Usage
 
@@ -100,28 +98,6 @@ This operator works in three different modes:
 
 For detailed explanation how caching with RxJS can be implemented have a look at *"[Caching HTTP responses](https://stackoverflow.com/documentation/rxjs/8247/common-recipes/26490/caching-http-responses)"* in the StackOverflow Documentation.
 
-## endWith
-
-```
-endWith(...values: Array<T>)
-```
-
-Emits a sequence of values after the source Observables completes.
-
-![endWith](https://raw.githubusercontent.com/martinsik/rxjs-extra/master/doc/endWith.png "The endWith() operator")
-
-These two operator chains are equivalent:
-
-```
-source.endWith('a', 'b', 'c')
-
-source.concat(Observable.of('a', 'b', 'c'))
-```
-
-However, the `endWith()` operator has much better performance than using `concat()` and `Observable.of()`.
-
-See demo [`demo/endWith.js`](https://github.com/martinsik/rxjs-extra/blob/master/demo/endWith.js) for typical usage example or see this operator compared with `concat` using marble tests [`demo/endWith_marbles.js`](https://github.com/martinsik/rxjs-extra/blob/master/demo/endWith_marbles.js).
-
 ## queueTime
 
 ```
@@ -209,28 +185,6 @@ The number of emissions and their values varies. For the complete example with v
 
 See demos: [`demo/rateLimit.js`](https://github.com/martinsik/rxjs-extra/blob/master/demo/rateLimit.js) and [`demo/rateLimit_2.js`](https://github.com/martinsik/rxjs-extra/blob/master/demo/rateLimit_2.js).
 
-## takeWhileInclusive
-
-```
-takeWhileInclusive(predicate: (value: T, index: number) => boolean)
-```
-
-Same as the [`takeWhile()`](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-takeWhile) operator but this implementation emits also the last item that didn't match the predicate function.
-
-![takeWhileInclusive](https://raw.githubusercontent.com/martinsik/rxjs-extra/master/doc/takeWhileInclusive.png "The takeWhileInclusive() operator")
-
-```
-Observable.range(1, 6)
-    .takeWhileInclusive(n => n !== 4)
-    .subscribe(console.log);
-```
-
-The preceding example will print numbers from `1` to `4` including.
-
-This operator has also been discussed in RxJS 5 in [ReactiveX/rxjs#2420](https://github.com/ReactiveX/rxjs/issues/2420).
-
-See demo: [`demo/takeWhileInclusive.js`](https://github.com/martinsik/rxjs-extra/blob/master/demo/takeWhileInclusive.js)
-
 # Testing
 
 This repository tests are based completely on RxJS marble tests and its helpers. To run the test suit simply run the following `npm` script:
@@ -251,7 +205,7 @@ The `tests2png_full` script does the following things:
 
 2. Creates `./docs_app/content/img/` directory.
 
-3. Runs tests with `tests2png.opts` options.
+3. Runs `mocha` tests with `tests2png.opts` options.
 
 4. Copies content of `./docs_app/content/img/` to `./doc`.
 

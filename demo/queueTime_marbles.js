@@ -9,7 +9,6 @@ const inputMarbles =             '--1-2-3-------------4--5---6------------7-|';
 const expectedConcatMarbles =    '--1------2----3----------4----5----6---------(7|)';
 const expectedQueueTimeMarbles = '--1----2----3-------4----5----6---------7-|';
 
-
 const scheduler = new TestScheduler(chai.assert.deepEqual);
 const t = scheduler.createTime(delayMarbles);
 

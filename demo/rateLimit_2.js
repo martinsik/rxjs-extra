@@ -26,7 +26,7 @@ subject
     .rateLimit(3, 1000, true)
     .subscribe(val => {
         const time = (new Date()).getTime() - sinceStart;
-        console.log(time.toString(), 'ms', val)
+        console.log(time.toString(), 'ms', val);
     });
 
 scheduleNext();

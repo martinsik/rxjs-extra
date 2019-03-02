@@ -57,7 +57,7 @@ export function cache<T>(windowTime: number, options: CacheOptions = {}, schedul
     }
 
     return observable as Observable<T>;
-  }
+  };
 }
 
 const getNow = (scheduler: SchedulerLike): number => {
