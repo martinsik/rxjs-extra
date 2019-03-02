@@ -233,16 +233,33 @@ See demo: [`demo/takeWhileInclusive.js`](https://github.com/martinsik/rxjs-extra
 
 # Testing
 
-This repository uses the same `mocha` testing helpers as RxJS 5 including rendering marble diagrams.
-
-To run the tests this repo needs to download the RxJS 5 archive, unpack it, copy helper scripts and patch them by [files from `spec-patch`](https://github.com/martinsik/rxjs-extra/tree/master/spec-patch).
-
-This is done automatically by running `npm run spec-setup` script. The workflow is then as follows:
+This repository tests are based completely on RxJS marble tests and its helpers. To run the test suit simply run the following `npm` script:
 
 ```
-$ clone https://github.com/martinsik/rxjs-extra
-$ cd rxjs-extra
-$ npm i
-$ npm run spec-setup && npm run test-build
 $ npm run test
 ```
+
+This repository also uses the same marble to png generator as the originial RxJS repo. Since this isn't an officially exported feature of RxJS the process is a little more complicated but fully automatic by running:
+
+```
+$ npm run tests2png_full
+```
+
+The `tests2png_full` script does the following things:
+
+1. Clones `https://github.com/ReactiveX/rxjs.git` repo into `.rxjs-repo` directory.
+
+2. Creates `./docs_app/content/img/` directory.
+
+3. Runs tests with `tests2png.opts` options.
+
+4. Copies content of `./docs_app/content/img/` to `./doc`.
+
+5. Removes temp directories `.rxjs-repo` and `./docs_app`.
+
+If you know you're about to run the png generator a lot you can just prepare the temp directories and re-run the test suit. The temp directories won't be removed after running the tests:
+
+ ```
+$ npm run prepare_tests2png
+$ npm run tests2png
+ ```

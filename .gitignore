@@ -15,3 +15,6 @@ test-js
 test/helpers/*
 !test/helpers/README.md
 dist
+
+.rxjs-repo
+.docs_app

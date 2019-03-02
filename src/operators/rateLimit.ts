@@ -1,20 +1,13 @@
-import { Observable } from 'rxjs/Observable';
-import { PartialObserver } from 'rxjs/Observer';
-import { Operator } from 'rxjs/Operator';
-import { Scheduler as SchedulerI } from 'rxjs/Scheduler';
-import { Action } from 'rxjs/scheduler/Action';
-import { async } from 'rxjs/scheduler/async';
-import { Subscriber } from 'rxjs/Subscriber';
-import { Subscription } from 'rxjs/Subscription';
+import { Observable, asyncScheduler, SchedulerLike, Operator, Subscriber, Subscription, SchedulerAction, PartialObserver } from 'rxjs';
 
 export function rateLimit<T>(this: Observable<T>, count: number, timeWindow: number,
-                             emitAsap: boolean = false, scheduler: SchedulerI = async): Observable<T[]> {
+                             emitAsap: boolean = false, scheduler: SchedulerLike = asyncScheduler): Observable<T[]> {
   return this.lift(new RateLimitOperator(count, timeWindow, emitAsap, scheduler));
 }
 
 class RateLimitOperator<T> implements Operator<T, T[]> {
   constructor(private count: number, private timeWindow: number,
-              private emitAsap: boolean, private scheduler: SchedulerI) {
+              private emitAsap: boolean, private scheduler: SchedulerLike) {
   }
 
   public call(subscriber: Subscriber<T[]>, source: any) {
@@ -31,7 +24,7 @@ class RateLimitSubscriber<T> extends Subscriber<T> {
   private lastEmissionTime: number = null;
 
   constructor(destination: Subscriber<T[]>, private count: number,
-              private timeWindow: number, private emitAsap: boolean, private scheduler: SchedulerI) {
+              private timeWindow: number, private emitAsap: boolean, private scheduler: SchedulerLike) {
     super(destination);
   }
 
@@ -86,11 +79,11 @@ class RateLimitSubscriber<T> extends Subscriber<T> {
     if (buffer.length === 0) {
       clear();
     } else {
-      ((this as any) as Action<RateLimitScheduledState<T>>).schedule(state, timeWindow);
+      ((this as any) as SchedulerAction<RateLimitScheduledState<T>>).schedule(state, timeWindow);
     }
   }
 
-  private storeLastEmissionTime(now): void {
+  private storeLastEmissionTime(now: number): void {
     this.lastEmissionTime = now;
   }
 
@@ -133,7 +126,7 @@ interface RateLimitScheduledState<T> {
   buffer: T[];
   clear: () => void;
   isStopped: () => boolean;
-  storeLastEmissionTime: (arg) => any;
+  storeLastEmissionTime: (arg: number) => any;
   now: () => any;
   complete: () => void;
 }

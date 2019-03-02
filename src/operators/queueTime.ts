@@ -1,16 +1,12 @@
-import { Operator, Scheduler, Subscriber, Subscription } from 'rxjs';
-import { Observable } from 'rxjs/Observable';
-import { PartialObserver } from 'rxjs/Observer';
-import { Scheduler as SchedulerI } from 'rxjs/Scheduler';
-import { Action } from 'rxjs/scheduler/Action';
+import { Observable, asyncScheduler, Operator, SchedulerLike, Subscriber, Subscription, PartialObserver, SchedulerAction } from 'rxjs';
 
 export function queueTime<T>(this: Observable<T>,
-                             delay: number, scheduler: SchedulerI = Scheduler.async): Observable<T> {
+                             delay: number, scheduler: SchedulerLike = asyncScheduler): Observable<T> {
   return this.lift(new QueueTimeOperator(delay, scheduler));
 }
 
 class QueueTimeOperator<T> implements Operator<T, T> {
-  constructor(private windowTime: number, private scheduler?: SchedulerI) {
+  constructor(private windowTime: number, private scheduler?: SchedulerLike) {
   }
 
   public call(subscriber: Subscriber<T>, source: any) {
@@ -25,7 +21,7 @@ class QueueTimeSubscriber<T> extends Subscriber<T> {
   private lastEmissionTime: number = null;
   private buffer: T[] = [];
 
-  constructor(destination: Subscriber<T>, private delay: number, private scheduler?: SchedulerI) {
+  constructor(destination: Subscriber<T>, private delay: number, private scheduler?: SchedulerLike) {
     super(destination);
   }
 
@@ -83,7 +79,7 @@ class QueueTimeSubscriber<T> extends Subscriber<T> {
     if (buffer.length === 0) {
       context.scheduledAction = null;
     } else {
-      ((this as any) as Action<QueueTimeScheduledState<T>>).schedule(state, delay);
+      ((this as any) as SchedulerAction<QueueTimeScheduledState<T>>).schedule(state, delay);
     }
   }
 
