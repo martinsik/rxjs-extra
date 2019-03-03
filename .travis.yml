@@ -12,7 +12,7 @@ node_js:
   - "4"
 
 install:
-  - npm install
+  - npm i
   - node -v
   - npm -v
-  - npm run spec_setup && npm run test_build_cjs_run
+  - npm run test_full

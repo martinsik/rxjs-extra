@@ -2,7 +2,6 @@ import { startWith } from 'rxjs/operators';
 import { expect } from 'chai';
 import { hot, cold, expectObservable, expectSubscriptions } from '../marble-testing';
 
-declare const global: any;
 declare function asDiagram(arg: string): Function;
 
 describe('Test', () => {

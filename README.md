@@ -187,7 +187,13 @@ See demos: [`demo/rateLimit.js`](https://github.com/martinsik/rxjs-extra/blob/ma
 
 # Testing
 
-This repository tests are based completely on RxJS marble tests and its helpers. To run the test suit simply run the following `npm` script:
+This repository tests are based completely on RxJS marble tests and its helpers. First you'll have to clone the original RxJS repo becase tests in this repo rely on the tools available only in the official RxJS repo.
+                                                                                
+```
+$ npm run clone_rxjs_repo
+```
+ 
+To run the test suit simply run the following `npm` script:
 
 ```
 $ npm run test

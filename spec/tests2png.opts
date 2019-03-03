@@ -1,6 +1,5 @@
 --require ts-node/register
 --require .rxjs-repo/spec/helpers/tests2png/diagram-test-runner.ts
---require .rxjs-repo/spec/helpers/marble-testing.ts
 --require .rxjs-repo/spec/helpers/testScheduler-ui.ts
 --ui .rxjs-repo/spec/helpers/testScheduler-ui.ts
 
