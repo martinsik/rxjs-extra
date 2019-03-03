@@ -21,12 +21,12 @@
     "test_full": "npm run clone_rxjs_repo && npm run test",
     "tests2png": "TS_NODE_PROJECT=tsconfig.spec.json mocha --opts spec/tests2png.opts \"spec/**/finalizeWithReason-spec.ts\"",
     "tests2png_full": "npm run prepare_tests2png && npm run tests2png && npm run move_generated_png && npm run clean_tests2png",
-    "lint": "tslint -c tslint.json 'src/**/*.ts' 'test/**/*.ts' 'demo/**/*.js'",
-    "lint_fix": "npm run lint -- --fix",
     "clone_rxjs_repo": "npm run clean_rxjs_repo && git clone https://github.com/ReactiveX/rxjs.git --depth=1 .rxjs-repo",
     "create_tests2png_dir": "mkdir -p ./docs_app/content/img",
     "prepare_tests2png": "npm run clean_tests2png && npm run clone_rxjs_repo && npm run create_tests2png_dir",
-    "move_generated_png": "cp -R ./docs_app/content/img/ ./doc"
+    "move_generated_png": "cp -R ./docs_app/content/img/ ./doc",
+    "lint": "tslint -c tslint.json 'src/**/*.ts' 'spec/**/*.ts' 'demo/**/*.js'",
+    "lint_fix": "npm run lint -- --fix"
   },
   "repository": {
     "type": "git",
