@@ -4,7 +4,11 @@ Complete rewrite that supports RxJS 6 and pipable operators
 
 **Features**
 
-- **finalizeWithReason** - new operator
+- **finalizeWithReason** - New operator.
+
+**Breakign changes**
+
+- **cache** - For now doesn't catch errors. Will need to reconsider what should be the expected behavior from this.
 
 **Deprecations**
 

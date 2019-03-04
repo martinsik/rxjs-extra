@@ -1,5 +1,5 @@
-import { Observable, SchedulerLike, MonoTypeOperatorFunction, Timestamp } from 'rxjs';
-import { timestamp, publishReplay, refCount, filter, map, takeWhile, take } from 'rxjs/operators';
+import { Observable, SchedulerLike, MonoTypeOperatorFunction, Timestamp, asyncScheduler } from 'rxjs';
+import { timestamp, publishReplay, refCount, filter, map, takeWhile, take, tap } from 'rxjs/operators';
 
 export enum CacheMode {
   Default,
@@ -7,37 +7,26 @@ export enum CacheMode {
   SilentRefresh,
 }
 
-export interface CacheOptions {
-  mode?: CacheMode;
-}
-
-export function cache<T>(windowTime: number, options: CacheOptions = {}, scheduler?: SchedulerLike): MonoTypeOperatorFunction<T> {
+export function cache<T>(windowTime: number, mode: CacheMode = CacheMode.Default, scheduler: SchedulerLike = asyncScheduler): MonoTypeOperatorFunction<T> {
   return (source: Observable<T>): Observable<T> => {
-    if (!options) {
-      options = {} as CacheOptions;
-    }
-    options.mode = options.mode || CacheMode.Default;
-
-    let observable: Observable<T>;
-
-    if (options.mode === CacheMode.SilentRefresh) {
-      observable = observable.pipe(
+    if (mode === CacheMode.SilentRefresh) {
+      return source.pipe(
         timestamp(scheduler),
         publishReplay(1, Number.POSITIVE_INFINITY, scheduler),
         refCount(),
         takeWhile<Timestamp<T>>((item, i) => {
-          if (i === 0) { // check only the first item whether it's still valid
+          if (i === 0) { // check only the first item if it's still valid
             return getNow(scheduler) > item.timestamp + windowTime;
           }
           // the second item always needs to be the last one
           return false;
-        }),
+        }, true),
         filter((item, i) => i === 0), // always pass only the first item
         map<Timestamp<T>, T>((item) => item.value),
       );
 
-    } else if (options.mode === CacheMode.TolerateExpired) {
-      observable = observable.pipe(
+    } else if (mode === CacheMode.TolerateExpired) {
+      return source.pipe(
         timestamp(scheduler),
         publishReplay(1, Number.POSITIVE_INFINITY, scheduler),
         refCount(),
@@ -49,14 +38,12 @@ export function cache<T>(windowTime: number, options: CacheOptions = {}, schedul
       );
 
     } else {
-      observable = observable.pipe(
+      return source.pipe(
         publishReplay(1, windowTime, scheduler),
         refCount(),
         take(1),
       );
     }
-
-    return observable as Observable<T>;
   };
 }
 

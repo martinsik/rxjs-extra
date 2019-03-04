@@ -137,54 +137,6 @@ Notice that with `queueTime()` items such as `1`, `4` and `7` are not delayed at
 
 See demos: [`demo/queueTime.js`](https://github.com/martinsik/rxjs-extra/blob/master/demo/queueTime.js), [`demo/queueTime_2.js`](https://github.com/martinsik/rxjs-extra/blob/master/demo/queueTime_2.js), [`demo/queueTime_3.js`](https://github.com/martinsik/rxjs-extra/blob/master/demo/queueTime_3.js) or see marble tests comparing `concatMap()` and `queueTime()` [`demo/queueTime_marbles.js`](https://github.com/martinsik/rxjs-extra/blob/master/demo/queueTime_marbles.js).
 
-## rateLimit
-
-```
-rateLimit(count: number, timeWindow: number, emitAsap: boolean = false, scheduler: Scheduler = async)
-```
-
-Buffer max `count` items for a period of `timeWindow` starting by the fist item received. 
-
-![rateLimit](https://raw.githubusercontent.com/martinsik/rxjs-extra/master/doc/rateLimit.png "The rateLimit() operator")
-
-```
-source.rateLimit(3, 1000)
-```
-
-This operator is similar to using `bufferCount` and `delay` in the following chain:
-
-```
-source.bufferTime(1000, null, 3)
-    .filter(array => array.length !== 0)
-    .concatMap((buffer, i) => i === 0
-        ? Observable.of(buffer)
-        : Observable.of(buffer).delay(1000, scheduler)
-    );
-```
-
-However, to ensure at least `1000ms` delay we had to delay some emissions twice and also `bufferTime()` might split groups of emitted items ineffectively.
-
-The `rateLimit` operator can work in tho modes:
-
- - `emitAsap = false` - max `count` items are buffered for `timeWindow`.
- 
- - `emitAsap = true` - the first item received after at least `timeWindow` of inactivity is re-emitted immediately. Then all consecutive items are buffered for the period of `timeWindow`.
-
-The difference should be more obvious from the following marble diagrams comparing `rateLimit()` in the two modes and the chain using `bufferTime()`:
-
-```
-delay                     ----------
-input                     --1-2-3-------------4--5---6------------7-|
-
-rateLimit(3, 100)         ------------x-----------------y-------------------(z|)
-rateLimit(3, 100, true)   --x---------y---------z---------i---------(j|)
-bufferTime(100, null, 3)  ------x-----------------------------y---------z---------(i|)
-```
-
-The number of emissions and their values varies. For the complete example with values for each test case see [`demo/rateLimit_marble.js`](https://github.com/martinsik/rxjs-extra/blob/master/demo/rateLimit_marble.js).
-
-See demos: [`demo/rateLimit.js`](https://github.com/martinsik/rxjs-extra/blob/master/demo/rateLimit.js) and [`demo/rateLimit_2.js`](https://github.com/martinsik/rxjs-extra/blob/master/demo/rateLimit_2.js).
-
 # Testing
 
 This repository tests are based completely on RxJS marble tests and its helpers. First you'll have to clone the original RxJS repo becase tests in this repo rely on the tools available only in the official RxJS repo.
