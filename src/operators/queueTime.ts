@@ -1,96 +1,27 @@
-import { Observable, asyncScheduler, Operator, SchedulerLike, Subscriber, Subscription, PartialObserver, SchedulerAction } from 'rxjs';
+import { defer, timer, of, Observable, MonoTypeOperatorFunction, SchedulerLike, asyncScheduler, TimeInterval } from 'rxjs';
+import { timeInterval, concatMap, delay, tap } from 'rxjs/operators';
 
-export function queueTime<T>(this: Observable<T>,
-                             delay: number, scheduler: SchedulerLike = asyncScheduler): Observable<T> {
-  return this.lift(new QueueTimeOperator(delay, scheduler));
-}
+export const queueTime = <T>(timeDelay: number, scheduler: SchedulerLike = asyncScheduler): MonoTypeOperatorFunction<T> =>
+  (source: Observable<T>) => defer(() => {
+    let nextEarliestEmission: number = null;
 
-class QueueTimeOperator<T> implements Operator<T, T> {
-  constructor(private windowTime: number, private scheduler?: SchedulerLike) {
-  }
+    return source.pipe(
+      concatMap((value) => {
+        const now = scheduler.now();
+        const expectedEmissionTime = nextEarliestEmission;
 
-  public call(subscriber: Subscriber<T>, source: any) {
-    return source.subscribe(new QueueTimeSubscriber(subscriber, this.windowTime, this.scheduler));
-  }
-}
+        if (expectedEmissionTime === null || now > expectedEmissionTime) {
+          nextEarliestEmission = now + timeDelay;
+          
+          return of(value);
+        } else {
+          const requiredDelay = expectedEmissionTime - now;
+          nextEarliestEmission = now + timeDelay + requiredDelay;
 
-// TODO: Split it
-// tslint:disable-next-line:max-classes-per-file
-class QueueTimeSubscriber<T> extends Subscriber<T> {
-  private scheduledAction: Subscription;
-  private lastEmissionTime: number = null;
-  private buffer: T[] = [];
-
-  constructor(destination: Subscriber<T>, private delay: number, private scheduler?: SchedulerLike) {
-    super(destination);
-  }
-
-  public _next(value?: T): void {
-    const { scheduler, delay } = this;
-
-    const now = scheduler.now();
-    const sinceLastEmission = now - this.lastEmissionTime;
-
-    if (this.lastEmissionTime === null || sinceLastEmission > delay) {
-      this.lastEmissionTime = scheduler.now();
-      this.destination.next(value);
-
-      return;
-    }
-
-    this.buffer.push(value);
-
-    if (!this.scheduledAction) {
-      this.scheduleBufferEmission(sinceLastEmission > delay ? delay : delay - sinceLastEmission);
-    }
-  }
-
-  protected _complete() {
-    if (this.buffer.length === 0) {
-      this.doComplete();
-    }
-  }
-
-  private scheduleBufferEmission(time: number) {
-    const { destination, delay, buffer } = this;
-
-    const state: QueueTimeScheduledState<T> = {
-      buffer,
-      context: this,
-      delay,
-      destination,
-    };
-
-    this.scheduledAction = this.scheduler.schedule(this.emitScheduledBuffer, time, state);
-  }
-
-  private emitScheduledBuffer(state: QueueTimeScheduledState<T>): void {
-    const { destination, delay, buffer, context } = state;
-
-    destination.next(buffer.shift());
-
-    if (context.isStopped && buffer.length === 0) {
-      context.doComplete();
-      return;
-    }
-
-    context.lastEmissionTime = context.scheduler.now();
-
-    if (buffer.length === 0) {
-      context.scheduledAction = null;
-    } else {
-      ((this as any) as SchedulerAction<QueueTimeScheduledState<T>>).schedule(state, delay);
-    }
-  }
-
-  private doComplete() {
-    super._complete();
-  }
-}
-
-interface QueueTimeScheduledState<T> {
-  delay: number;
-  destination: PartialObserver<T>;
-  buffer: T[];
-  context: QueueTimeSubscriber<T>;
-}
+          return of(value).pipe(
+            delay(requiredDelay, scheduler),
+          );
+        }
+      }),
+    );
+  });

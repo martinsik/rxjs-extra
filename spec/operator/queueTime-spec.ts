@@ -1,72 +1,85 @@
-import * as Rx from 'rxjs';
-import '../../dist/cjs/RxPlus';
-import {expect} from 'chai';
-import marbleTestingSignature = require('../helpers/marble-testing'); // tslint:disable-line:no-require-imports
+import { expect } from 'chai';
 
-declare const {asDiagram, time};
-declare const hot: typeof marbleTestingSignature.hot;
-declare const cold: typeof marbleTestingSignature.cold;
-declare const expectObservable: typeof marbleTestingSignature.expectObservable;
-declare const expectSubscriptions: typeof marbleTestingSignature.expectSubscriptions;
-declare const rxTestScheduler: Rx.TestScheduler;
+import { hot, cold, time, expectObservable, expectSubscriptions } from '../marble-testing';
+import { queueTime } from '../../src/operators';
+import { TestScheduler } from "rxjs/testing";
 
-const Observable = Rx.Observable;
+declare function asDiagram(arg: string): Function;
+declare const rxTestScheduler: TestScheduler;
 
 describe('Observable.prototype.queueTime', () => {
-
   asDiagram('queueTime(50)')('should make equal delays between emissions', () => {
-    //                  x-----     xx-----     -----
-    //                        -----       -----     -----
-    const source = hot('-1--2--------3-45------6--|');
+    //                x-----     xx-----     -----
+    //                      -----       -----     -----
+    const e1 =   hot('-1--2--------3-45------6--|');
     const expected = '-1----2------3----4----5----(6|)';
-    const subs = '^                           !';
-    const t = time('-----|');
+    const e1subs =   '^                         !';
+    const t =   time('-----|');
 
-    expectObservable(source.queueTime(t, rxTestScheduler)).toBe(expected);
-    expectSubscriptions(source.subscriptions).toBe(subs);
+    const source = e1.pipe(
+      queueTime(t, rxTestScheduler),
+    );
+
+    expectObservable(source).toBe(expected);
+    expectSubscriptions(e1.subscriptions).toBe(e1subs);
   });
 
   it('should not delay item when long delay between emissions', () => {
-    //                  -----     xxx-----     xx-----
-    //                       -----        -----       -----
-    const source = hot('1------------2-----------3----|');
+    //                -----     xxx-----     xx-----
+    //                     -----        -----       -----
+    const e1 =   hot('1------------2-----------3----|');
     const expected = '1------------2-----------3----|';
-    const subs = '^                             !';
-    const t = time('-----|');
+    const e1subs =   '^                             !';
+    const t =   time('-----|');
 
-    expectObservable(source.queueTime(t, rxTestScheduler)).toBe(expected);
-    expectSubscriptions(source.subscriptions).toBe(subs);
+    const source = e1.pipe(
+      queueTime(t, rxTestScheduler),
+    );
+
+    expectObservable(source).toBe(expected);
+    expectSubscriptions(e1.subscriptions).toBe(e1subs);
   });
 
   it('should complete when the source is empty', () => {
-    const source = hot('--|');
+    const e1 =   hot('--|');
     const expected = '--|';
-    const subs = '^ !';
-    const t = time('-----|');
+    const e1subs =   '^ !';
+    const t =   time('-----|');
 
-    expectObservable(source.queueTime(t, rxTestScheduler)).toBe(expected);
-    expectSubscriptions(source.subscriptions).toBe(subs);
+    const source = e1.pipe(
+      queueTime(t, rxTestScheduler),
+    );
+
+    expectObservable(source).toBe(expected);
+    expectSubscriptions(e1.subscriptions).toBe(e1subs);
   });
 
   it('should propagate error immediately', () => {
     const err = new Error();
-    const source = hot('1-23--#', undefined, err);
+    const e1 =   hot('1-23--#', undefined, err);
     const expected = '1-----#';
-    const subs = '^     !';
-    const t = time('----------|');
+    const e1subs =   '^     !';
+    const t =   time('----------|');
 
-    expectObservable(source.queueTime(t, rxTestScheduler)).toBe(expected, undefined, err);
-    expectSubscriptions(source.subscriptions).toBe(subs);
+    const source = e1.pipe(
+      queueTime(t, rxTestScheduler),
+    );
+
+    expectObservable(source).toBe(expected, undefined, err);
+    expectSubscriptions(e1.subscriptions).toBe(e1subs);
   });
 
   it('should make equal delay when source emitting too fast', () => {
-    const source = hot('1234567|');
+    const e1 =   hot('1234567|');
     const expected = '1----2----3----4----5----6----(7|)';
-    const subs = '^                             !';
-    const t = time('-----|');
+    const e1subs =   '^      !';
+    const t =   time('-----|');
 
-    expectObservable(source.queueTime(t, rxTestScheduler)).toBe(expected);
-    expectSubscriptions(source.subscriptions).toBe(subs);
+    const source = e1.pipe(
+      queueTime(t, rxTestScheduler),
+    );
+
+    expectObservable(source).toBe(expected);
+    expectSubscriptions(e1.subscriptions).toBe(e1subs);
   });
-
 });

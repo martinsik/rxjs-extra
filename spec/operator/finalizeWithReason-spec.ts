@@ -6,7 +6,6 @@ import { hot, cold, expectObservable, expectSubscriptions } from '../marble-test
 import { finalizeWithReason, FinalizeReason } from '../../src/operators';
 
 declare function asDiagram(arg: string): Function;
-
 declare const rxTestScheduler: TestScheduler;
 
 describe('finalizeWithReason', () => {
