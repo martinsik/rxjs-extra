@@ -10,9 +10,9 @@ declare const rxTestScheduler: TestScheduler;
 
 describe('finalizeWithReason', () => {
   it('should recognise that the chain disposed because observer unsubscribed', () => {
-    const e1 =  cold('---a--b--c--');
+    const e1 =  cold('---a--b--c-|');
     const e1subs =   '^       !';
-    const expected = '---a--b--';
+    const expected = '---a--b-|';
     const unsub =    '        !';
 
     let reason: FinalizeReason;
