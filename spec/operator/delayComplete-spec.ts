@@ -1,7 +1,5 @@
 import { expect } from 'chai';
-import { EMPTY } from 'rxjs';
 import { TestScheduler } from 'rxjs/testing';
-import { finalize } from 'rxjs/operators';
 
 import { hot, cold, time, expectObservable, expectSubscriptions } from '../marble-testing';
 import { delayComplete } from '../../src/operators';
