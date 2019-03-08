@@ -1,7 +1,7 @@
 import { MonoTypeOperatorFunction } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-type ErrorOrErrorFactory = Error | (<T>(value: T) => Error);
+type ErrorOrErrorFactory = any | (<T>(value: T) => Error);
 
 export const errorWhen = <T>(predicate: (value: T) => boolean, errorOrFactory: ErrorOrErrorFactory = new Error()): MonoTypeOperatorFunction<T> =>
   map((value: T): T => {
