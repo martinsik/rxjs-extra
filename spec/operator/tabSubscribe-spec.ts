@@ -6,10 +6,9 @@ import { TestScheduler } from 'rxjs/testing';
 import { hot, cold, expectObservable, expectSubscriptions } from '../marble-testing';
 import { FinalizeReason, tapSubscribe } from "../../src/operators";
 
-declare function asDiagram(arg: string): Function;
 declare const rxTestScheduler: TestScheduler;
 
-describe.only('tapSubscribe', () => {
+describe('tapSubscribe', () => {
   it('should invoke handler when a new observer subscribes', () => {
     const e1 =  cold('---a--b--c-|');
     const e1subs =   '^          !';
@@ -71,7 +70,6 @@ describe.only('tapSubscribe', () => {
     const e1 = hot('---a--b--c--');
 
     let calls = 0;
-
     const source = e1.pipe(
       tapSubscribe(() => calls++),
     );
@@ -81,6 +79,4 @@ describe.only('tapSubscribe', () => {
 
     expect(calls).to.be.equal(2);
   });
-
-
 });

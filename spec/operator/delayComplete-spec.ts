@@ -7,11 +7,11 @@ import { delayComplete } from '../../src/operators';
 declare function asDiagram(arg: string): Function;
 declare const rxTestScheduler: TestScheduler;
 
-describe.only('delayComplete', () => {
-  asDiagram('delayComplete(50)')('should delay the complete notification', () => {
-    const e1 =  cold('---a--b--|');
-    const e1subs =   '^        !';
-    const expected = '---a--b----|';
+describe('delayComplete', () => {
+  asDiagram('delayComplete(20)')('should delay the complete notification', () => {
+    const e1 =  cold('--a--b--|  ');
+    const e1subs =   '^       !  ';
+    const expected = '--a--b----|';
     const t =   time('--|');
 
     const source = e1.pipe(

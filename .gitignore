@@ -17,4 +17,4 @@ test/helpers/*
 dist
 
 .rxjs-repo
-.docs_app
+docs_app
