@@ -8,7 +8,7 @@ import { errorWhen } from '../../src/operators';
 declare function asDiagram(arg: string): Function;
 declare const rxTestScheduler: TestScheduler;
 
-describe.only('errorWhen', () => {
+describe('errorWhen', () => {
   asDiagram('errorWhen(val => val === 3)')('should emit an error when an item matches predicate', () => {
     const e1 =  cold('--1--2--3--4--|');
     const e1subs =   '^       !';
@@ -58,12 +58,15 @@ describe.only('errorWhen', () => {
     let invoked = false;
 
     const source = e1.pipe(
-      errorWhen(value => Number(value) === 3, (value: string) => {
-        expect(value).to.be.equal('3');
-        invoked = true;
+      errorWhen<string>(
+        value => Number(value) === 3,
+        (value: string) => {
+          expect(value).to.be.equal('3');
+          invoked = true;
 
-        return error
-      }),
+          return error
+        }
+      ),
     );
 
     expectObservable(source).toBe(expected, undefined, error);
