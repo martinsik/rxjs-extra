@@ -27,6 +27,7 @@ describe('delayComplete', () => {
     const e1subs =   '(^!)';
     const t =   time('--|');
     const expected = '--|';
+
     const source = e1.pipe(
       delayComplete(t, rxTestScheduler),
     );
