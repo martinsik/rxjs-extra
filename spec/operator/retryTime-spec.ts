@@ -33,10 +33,7 @@ describe('retryTime', () => {
                      '                  ^      !         ',
                      '                           ^      !'];
     const expected = '-1-2-3-----1-2-3---1-2-3----1-2-3-#';
-    const t =  [time('---|'),
-                time('-|'),
-                time('--|'),
-    ];
+    const t =  [30, 10, 20];
 
     const source = e1.pipe(
       retryTime(t, rxTestScheduler),
