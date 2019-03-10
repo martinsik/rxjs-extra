@@ -169,9 +169,9 @@ The `tests2png_full` script does the following things:
 
 5. Removes temp directories `.rxjs-repo` and `./docs_app`.
 
-If you know you're about to run the png generator a lot you can just prepare the temp directories and re-run the test suit. The temp directories won't be removed after running the tests:
+If you know you're about to run the png generator a lot you can just clone the RxJS repo and re-run the test suit:
 
  ```
-$ npm run prepare_tests2png
+$ npm run clone_rxjs_repo
 $ npm run tests2png
  ```
