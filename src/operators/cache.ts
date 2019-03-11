@@ -1,6 +1,8 @@
 import { Observable, SchedulerLike, MonoTypeOperatorFunction, Timestamp } from 'rxjs';
 import { timestamp, filter, map, takeWhile, take, publishReplay, refCount } from 'rxjs/operators';
 
+import { schedulerNow } from "../utils/now";
+
 export enum CacheMode {
   Default,
   TolerateExpired,
@@ -24,7 +26,7 @@ export function cache<T>(windowTime: number, mode: CacheMode = CacheMode.Default
         refCount(),
         takeWhile<Timestamp<T>>((item, i) => {
           if (i === 0) { // check only the first item if it's still valid
-            return scheduler.now() > item.timestamp + windowTime;
+            return schedulerNow(scheduler) > item.timestamp + windowTime;
           }
           // the second item always needs to be the last one
           return false;
@@ -39,7 +41,7 @@ export function cache<T>(windowTime: number, mode: CacheMode = CacheMode.Default
         publishReplay(1, Number.POSITIVE_INFINITY, scheduler),
         refCount(),
         // check whether the cached item is still valid
-        takeWhile<Timestamp<T>>((item) => scheduler.now() > item.timestamp + windowTime, true),
+        takeWhile<Timestamp<T>>((item) => schedulerNow(scheduler) > item.timestamp + windowTime, true),
         map<Timestamp<T>, T>((item) => item.value),
       );
 

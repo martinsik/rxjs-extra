@@ -1,5 +1,6 @@
 import { defer, of, Observable, MonoTypeOperatorFunction, SchedulerLike } from 'rxjs';
 import { concatMap, delay } from 'rxjs/operators';
+import { schedulerNow } from "../utils/now";
 
 export const queueTime = <T>(timeDelay: number, scheduler?: SchedulerLike): MonoTypeOperatorFunction<T> =>
   (source: Observable<T>) => defer(() => {
@@ -7,7 +8,7 @@ export const queueTime = <T>(timeDelay: number, scheduler?: SchedulerLike): Mono
 
     return source.pipe(
       concatMap((value) => {
-        const now = scheduler.now();
+        const now = schedulerNow(scheduler);
         const expectedEmissionTime = nextEarliestEmission;
 
         if (expectedEmissionTime === null || now > expectedEmissionTime) {

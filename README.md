@@ -137,6 +137,14 @@ Notice that with `queueTime()` items such as `1`, `4` and `7` are not delayed at
 
 See demos: [`demo/queueTime.js`](https://github.com/martinsik/rxjs-extra/blob/master/demo/queueTime.js), [`demo/queueTime_2.js`](https://github.com/martinsik/rxjs-extra/blob/master/demo/queueTime_2.js), [`demo/queueTime_3.js`](https://github.com/martinsik/rxjs-extra/blob/master/demo/queueTime_3.js) or see marble tests comparing `concatMap()` and `queueTime()` [`demo/queueTime_marbles.js`](https://github.com/martinsik/rxjs-extra/blob/master/demo/queueTime_marbles.js).
 
+# Demo
+
+Each operator has a working example in [`/demo`](https://github.com/martinsik/rxjs-extra/blob/master/demo) directory. You can run any of them with `demo` npm script which is a preconfigured `ts-node`.
+
+```
+$ npm run demo -- demo/cache.ts
+```
+
 # Testing
 
 This repository tests are based completely on RxJS marble tests and its helpers. First you'll have to clone the original RxJS repo becase tests in this repo rely on the tools available only in the official RxJS repo.

@@ -7,7 +7,7 @@ import { TestScheduler } from "rxjs/testing";
 declare function asDiagram(arg: string): Function;
 declare const rxTestScheduler: TestScheduler;
 
-describe('Observable.prototype.queueTime', () => {
+describe('queueTime', () => {
   asDiagram('queueTime(50)')('should make equal delays between emissions', () => {
     //                x-----     xx-----     -----
     //                      -----       -----     -----

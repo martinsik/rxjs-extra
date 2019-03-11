@@ -1,24 +1,25 @@
 /**
- * Demo featuring the cache() operator with in CacheMode.TolerateExpired mode.
+ * Demo featuring the `cache()` operator with in `CacheMode.TolerateExpired` mode.
  *
  * In this demo each subscriber receives one or two items:
  *  1. The cached item
  *  2. Another item if the currently cached item was stale
- *
  */
-const Observable = require('rxjs/Observable').Observable;
-require('rxjs/add/observable/defer');
-require('rxjs/add/observable/of');
-const CacheMode = require('../dist/cjs/operator/cache').CacheMode;
-require('../dist/cjs/add/operator/cache');
+import { defer, of } from 'rxjs';
+import { delay } from "rxjs/operators";
+
+import { cache, CacheMode } from '../src/operators';
 
 let counter = 0;
 
-let source = Observable.defer(() => {
-    console.log('Observable.defer');
-    return Observable.of(counter++).delay(100);
-  })
-  .cache(1000, {mode: CacheMode.TolerateExpired});
+const source = defer(() => {
+  console.log('defer');
+  return of(counter++).pipe(
+    delay(100),
+  );
+}).pipe(
+  cache(1000, CacheMode.TolerateExpired),
+);
 
 setTimeout(() => source.subscribe(val => console.log('sub1', val)), 0);
 setTimeout(() => source.subscribe(val => console.log('sub2', val)), 200);
@@ -31,14 +32,14 @@ setTimeout(() => source.subscribe(val => console.log('sub5', val)), 3000);
  * when the cache was refreshed.
  *
  * Expected output:
-Observable.defer
+defer
 sub1 0
 sub2 0
 sub3 0
-Observable.defer
+defer
 sub3 1
 sub4 1
 sub5 1
-Observable.defer
+defer
 sub5 2
 */
