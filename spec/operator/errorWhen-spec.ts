@@ -1,6 +1,5 @@
 import { expect } from 'chai';
 import { TestScheduler } from 'rxjs/testing';
-import { finalize } from 'rxjs/operators';
 
 import { hot, cold, expectObservable, expectSubscriptions } from '../marble-testing';
 import { errorWhen } from '../../src/operators';
@@ -64,7 +63,7 @@ describe('errorWhen', () => {
           expect(value).to.be.equal('3');
           invoked = true;
 
-          return error
+          return error;
         }
       ),
     );
@@ -74,6 +73,6 @@ describe('errorWhen', () => {
 
     rxTestScheduler.flush();
 
-    expect(invoked).to.be.true;
+    expect(invoked).to.be.equal(true);
   });
 });

@@ -1,5 +1,5 @@
 import { concat, of, Subject, MonoTypeOperatorFunction, SchedulerLike } from 'rxjs';
-import { multicast, ignoreElements, delay, tap } from 'rxjs/operators'
+import { multicast, ignoreElements, delay, tap } from 'rxjs/operators';
 
 export const delayComplete = <T>(time: number, scheduler?: SchedulerLike): MonoTypeOperatorFunction<T> =>
   multicast(

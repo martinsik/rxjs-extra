@@ -9,7 +9,7 @@
  *  1700ms: The third observer subscribes. It receives only value "1" and completes.
  */
 import { defer, of } from 'rxjs';
-import { delay } from "rxjs/operators";
+import { delay } from 'rxjs/operators';
 
 import { cache, CacheMode } from '../src/operators';
 
@@ -24,7 +24,7 @@ const observer = {
 };
 let counter = 0;
 
-let source = defer(() => {
+const source = defer(() => {
   console.log('defer');
   return of(counter++).pipe(
     delay(100),

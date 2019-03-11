@@ -2,7 +2,7 @@
  * Demo featuring the `cache()` operator with default options.
  */
 import { defer, of } from 'rxjs';
-import { delay } from "rxjs/operators";
+import { delay } from 'rxjs/operators';
 
 import { cache } from '../src/operators';
 

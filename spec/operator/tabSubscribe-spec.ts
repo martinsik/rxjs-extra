@@ -4,7 +4,7 @@ import { finalize } from 'rxjs/operators';
 import { TestScheduler } from 'rxjs/testing';
 
 import { hot, cold, expectObservable, expectSubscriptions } from '../marble-testing';
-import { FinalizeReason, tapSubscribe } from "../../src/operators";
+import { FinalizeReason, tapSubscribe } from '../../src/operators';
 
 declare const rxTestScheduler: TestScheduler;
 
@@ -24,7 +24,7 @@ describe('tapSubscribe', () => {
 
     rxTestScheduler.flush();
 
-    expect(called).to.be.true;
+    expect(called).to.be.equal(true);
   });
 
   it('should invoke callback before emiting any next notifications', () => {

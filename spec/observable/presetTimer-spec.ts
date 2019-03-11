@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import { TestScheduler } from 'rxjs/testing';
 
 import { hot, cold, time, expectObservable } from '../marble-testing';
-import { presetTimer } from "../../src";
+import { presetTimer } from '../../src';
 
 declare function asDiagram(arg: string): Function;
 declare const rxTestScheduler: TestScheduler;

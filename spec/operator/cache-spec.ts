@@ -132,7 +132,6 @@ describe('cache', () => {
       cache(t, undefined, rxTestScheduler),
     );
 
-
     expectObservable(source).toBe(e1, undefined, err);
     expectObservable(source).toBe(e2, undefined, err);
   });
@@ -184,7 +183,7 @@ describe('cache', () => {
     ).toBe(expected);
   });
 
-  it('should complete properly after emitting cache', () => {
-
-  })
+  // it('should complete properly after emitting cache', () => {
+  //
+  // });
 });

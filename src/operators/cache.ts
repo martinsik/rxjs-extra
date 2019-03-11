@@ -1,7 +1,7 @@
 import { Observable, SchedulerLike, MonoTypeOperatorFunction, Timestamp } from 'rxjs';
 import { timestamp, filter, map, takeWhile, take, publishReplay, refCount } from 'rxjs/operators';
 
-import { schedulerNow } from "../utils/now";
+import { schedulerNow } from '../utils/now';
 
 export enum CacheMode {
   Default,

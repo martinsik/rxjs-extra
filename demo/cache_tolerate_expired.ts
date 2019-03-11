@@ -6,7 +6,7 @@
  *  2. Another item if the currently cached item was stale
  */
 import { defer, of } from 'rxjs';
-import { delay } from "rxjs/operators";
+import { delay } from 'rxjs/operators';
 
 import { cache, CacheMode } from '../src/operators';
 

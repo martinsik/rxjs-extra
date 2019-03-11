@@ -66,6 +66,6 @@ describe('takeUntilComplete', () => {
     rxTestScheduler.flush();
 
     expectObservable(source).toBe(expected);
-    expect(called).to.be.false;
+    expect(called).to.be.equal(true);
   });
 });
