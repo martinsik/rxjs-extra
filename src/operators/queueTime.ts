@@ -1,7 +1,7 @@
-import { defer, timer, of, Observable, MonoTypeOperatorFunction, SchedulerLike, asyncScheduler, TimeInterval } from 'rxjs';
-import { timeInterval, concatMap, delay, tap } from 'rxjs/operators';
+import { defer, of, Observable, MonoTypeOperatorFunction, SchedulerLike } from 'rxjs';
+import { concatMap, delay } from 'rxjs/operators';
 
-export const queueTime = <T>(timeDelay: number, scheduler: SchedulerLike = asyncScheduler): MonoTypeOperatorFunction<T> =>
+export const queueTime = <T>(timeDelay: number, scheduler?: SchedulerLike): MonoTypeOperatorFunction<T> =>
   (source: Observable<T>) => defer(() => {
     let nextEarliestEmission: number = null;
 

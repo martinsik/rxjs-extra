@@ -25,8 +25,9 @@
     "create_tests2png_dir": "mkdir -p ./docs_app/content/img",
     "prepare_tests2png": "npm run clean_tests2png && npm run clone_rxjs_repo",
     "move_generated_png": "cp -R ./docs_app/content/img/ ./doc",
-    "lint": "tslint -c tslint.json 'src/**/*.ts' 'spec/**/*.ts' 'demo/**/*.js'",
-    "lint_fix": "npm run lint -- --fix"
+    "lint": "tslint -c tslint.json 'src/**/*.ts' 'spec/**/*.ts' 'demo/**/*.ts'",
+    "lint_fix": "npm run lint -- --fix",
+    "demo": "ts-node -P tsconfig.base.json"
   },
   "repository": {
     "type": "git",

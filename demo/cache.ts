@@ -1,18 +1,21 @@
 /**
  * Demo featuring the cache() operator with default options.
  */
-const Observable = require('rxjs/Observable').Observable;
-require('rxjs/add/observable/defer');
-require('rxjs/add/observable/of');
-require('../dist/cjs/add/operator/cache');
+import { defer, of } from 'rxjs';
+import { delay, dematerialize, materialize, tap } from "rxjs/operators";
+
+import { cache } from '../src/operators';
 
 let counter = 0;
 
-let source = Observable.defer(() => {
-    console.log('Observable.defer');
-    return Observable.of(counter++).delay(100);
-  })
-  .cache(1000);
+const source = defer(() => {
+  console.log('defer');
+  return of(counter++).pipe(
+    delay(100),
+  );
+}).pipe(
+  cache(1000),
+);
 
 setTimeout(() => source.subscribe(val => console.log('sub1', val)), 0);
 setTimeout(() => source.subscribe(val => console.log('sub2', val)), 200);
@@ -21,12 +24,12 @@ setTimeout(() => source.subscribe(val => console.log('sub4', val)), 1500);
 setTimeout(() => source.subscribe(val => console.log('sub5', val)), 3000);
 
 /** Expected output:
-Observable.defer
+defer
 sub1 0
 sub2 0
-Observable.defer
+defer
 sub3 1
 sub4 1
-Observable.defer
+defer
 sub5 2
 */

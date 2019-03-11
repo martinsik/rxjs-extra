@@ -10,7 +10,7 @@ declare function asDiagram(arg: string): Function;
 declare const rxTestScheduler: TestScheduler;
 
 // @todo: rework these tests when RxJS supports creating multiple subscriptions as different times.
-describe('Observable.prototype.cache', () => {
+describe('cache', () => {
 
   function createSource() {
     let counter = 0;
@@ -184,7 +184,7 @@ describe('Observable.prototype.cache', () => {
     ).toBe(expected);
   });
 
-  // it('should complete properly after emitting cache', () => {
-  //
-  // })
+  it('should complete properly after emitting cache', () => {
+
+  })
 });
