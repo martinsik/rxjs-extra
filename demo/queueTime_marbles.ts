@@ -2,7 +2,6 @@ import { of } from 'rxjs';
 import { concatMap, delay, tap } from 'rxjs/operators';
 import { TestScheduler } from 'rxjs/testing';
 import { assert } from 'chai';
-
 import { queueTime } from '../src/operators';
 
 const delayMarbles =             '-----|';

@@ -1,5 +1,4 @@
 import { Subject } from 'rxjs';
-
 import { queueTime } from '../src/operators';
 
 let count = 0;

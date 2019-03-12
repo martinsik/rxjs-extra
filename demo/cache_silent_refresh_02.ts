@@ -10,7 +10,6 @@
  */
 import { defer, of } from 'rxjs';
 import { delay } from 'rxjs/operators';
-
 import { cache, CacheMode } from '../src/operators';
 
 function now() {

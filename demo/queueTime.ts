@@ -1,5 +1,4 @@
 import { range } from 'rxjs';
-
 import { queueTime } from '../src/operators';
 
 range(10).pipe(

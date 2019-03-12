@@ -3,7 +3,6 @@
  */
 import { defer, of } from 'rxjs';
 import { delay } from 'rxjs/operators';
-
 import { cache } from '../src/operators';
 
 let counter = 0;

@@ -1,8 +1,7 @@
 /**
- * Using `errorWhen` to emit `error` notification when a value matches the predicate function
+ * Using `errorWhen` to emit `error` notification when a value matches the predicate function.
  */
 import { range } from 'rxjs';
-
 import { errorWhen } from '../src/operators';
 
 range(10).pipe(
@@ -11,3 +10,11 @@ range(10).pipe(
   next: (v) => console.log(v),
   error: (e) => console.log(e.constructor.prototype.name),
 });
+
+/*
+$ npm run demo -- demo/errorWhen.ts
+0
+1
+2
+Error
+*/
