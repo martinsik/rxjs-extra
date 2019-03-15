@@ -24,7 +24,7 @@
     "clone_rxjs_repo": "npm run clean_rxjs_repo && git clone https://github.com/ReactiveX/rxjs.git --depth=1 .rxjs-repo",
     "create_tests2png_dir": "mkdir -p ./docs_app/content/img",
     "prepare_tests2png": "npm run clean_tests2png && npm run clone_rxjs_repo",
-    "move_generated_png": "cp -R ./docs_app/content/img/ ./doc",
+    "move_generated_png": "cp -R ./docs_app/content/img/ ./doc/marble-diagrams",
     "lint": "tslint -c tslint.json 'src/**/*.ts' 'spec/**/*.ts' 'demo/**/*.ts'",
     "lint_fix": "npm run lint -- --fix",
     "demo": "ts-node -P tsconfig.base.json"

@@ -1,6 +1,11 @@
 import { MonoTypeOperatorFunction, Observable, defer } from 'rxjs';
 
-export const tapSubscribe =  <T>(callback:  () => void): MonoTypeOperatorFunction<T> =>
+/**
+ * Triggers callback every time a new observer subscribes to this chain.
+ *
+ * @param callback
+ */
+export const tapSubscribe =  <T>(callback: () => void): MonoTypeOperatorFunction<T> =>
   (source: Observable<T>): Observable<T> =>
     defer(() => {
       callback();

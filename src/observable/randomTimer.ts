@@ -2,6 +2,14 @@ import { Observable, SchedulerLike, defer, of, asyncScheduler } from 'rxjs';
 import { delay, take, repeat, concatMap } from 'rxjs/operators';
 import { NumberGenerator, randomNumberGenerator } from '..';
 
+/**
+ * Creates an Observable that emits sequential numbers in random intervals on a specified scheduler.
+ *
+ * @param min
+ * @param max
+ * @param generator Function returning a random number based on `min` and `max` parameters.
+ * @param scheduler
+ */
 export const randomTimer = (
   min: number,
   max: number,

@@ -7,9 +7,13 @@ export enum FinalizeReason {
   Error = 'error',
 }
 
-type CallbackFunc = (reason: FinalizeReason) => void;
-
-export const finalizeWithReason = <T>(callback: CallbackFunc): MonoTypeOperatorFunction<T> =>
+/**
+ * Just like `finalize()` but passes to its callback also `reason` why the chain is being
+ * disposed (chain completed, errored or on unsubscription).
+ *
+ * @param callback (reason: FinalizeReason) => void
+ */
+export const finalizeWithReason = <T>(callback: (reason: FinalizeReason) => void): MonoTypeOperatorFunction<T> =>
   (source: Observable<T>) =>
     defer(() => {
       let completed = false;

@@ -3,6 +3,13 @@ import { concatMap, delay } from 'rxjs/operators';
 
 import { NumberGenerator, randomNumberGenerator } from '..';
 
+/**
+ *
+ * @param min number
+ * @param max number
+ * @param generator NumberGenerator
+ * @param scheduler
+ */
 export const randomDelay = <T>(
   min: number,
   max: number,

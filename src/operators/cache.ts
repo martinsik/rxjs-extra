@@ -9,6 +9,13 @@ export enum CacheMode {
   SilentRefresh,
 }
 
+/**
+ * Caches the source Observable values for a time period with three different caching strategies.
+ *
+ * @param windowTime
+ * @param mode
+ * @param scheduler
+ */
 export function cache<T>(windowTime: number, mode: CacheMode = CacheMode.Default, scheduler?: SchedulerLike): MonoTypeOperatorFunction<T> {
   return (source: Observable<T>): Observable<T> => {
     // @todo(): Use `shareReplay` when https://github.com/ReactiveX/rxjs/issues/4558 is fixed
