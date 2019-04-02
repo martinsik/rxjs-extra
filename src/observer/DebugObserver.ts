@@ -2,7 +2,7 @@ import { Subscriber, SchedulerLike } from "rxjs";
 import { schedulerNow } from "../utils/now";
 
 /**
- * Observer for debugging purposes. It timestamps each notification with time offset since the instance was created.
+ * Observer for debugging purposes that timestamps each notification with time offset since the instance was created.
  */
 export class DebugObserver<T> extends Subscriber<T> {
   private start = schedulerNow(this.scheduler);

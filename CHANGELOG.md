@@ -1,12 +1,12 @@
 ### 2.0.0
 
-Complete rewrite that supports RxJS 6 and pipable operators
+Complete rewrite that supports RxJS 6 and pipable operators.
 
 **Features**
 
-- **finalizeWithReason** - New operator.
+- **finalizeWithReason** - Operator added.
 
-**Breakign changes**
+**Breaking changes**
 
 - **cache** - For now doesn't catch errors. Will need to reconsider what should be the expected behavior from this.
 

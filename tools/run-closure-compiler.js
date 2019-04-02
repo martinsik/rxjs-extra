@@ -14,5 +14,5 @@ const compilerFlags = {
 
 const output = compiler(compilerFlags);
 
-fs.writeFileSync('./dist/es5/bundles/rxjs-extra.min.js', output.compiledCode, 'utf8');
-fs.writeFileSync('./dist/es5/bundles/rxjs-extra.min.js.map', output.sourceMap, 'utf8');
+fs.writeFileSync('./dist/es5/bundles/rxjs-extra.umd.min.js', output.compiledCode, 'utf8');
+fs.writeFileSync('./dist/es5/bundles/rxjs-extra.umd.min.js.map', output.sourceMap, 'utf8');

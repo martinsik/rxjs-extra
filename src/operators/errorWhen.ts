@@ -5,7 +5,7 @@ type ErrorOrErrorFactory = any | (<T>(value: T) => any);
 
 /**
  * Emits an `error` notification when a value matches the predicate function.
- * If value matches predicate `errorWhen` will emit an error based on `errorOrFactory` parameter.
+ * If value matches the predicate, `errorWhen` will emit an error based on `errorOrFactory` parameter.
  *
  * @param predicate
  * @param errorOrFactory An object or a function used to generate error objects

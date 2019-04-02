@@ -20,13 +20,13 @@ describe('cache', () => {
     );
   }
 
-  asDiagram('cache(50)')('should cache the items for 50 time window', () => {
+  it('should cache the items for 50 time window', () => {
     //                  a -----
     //                  b      -----
     //                  c           -----
-    const t = time('-----|');
     const notifier = hot('---1--2-34--5--');
     const expected1 =    '-a-a---bbb---c-';
+    const t =       time('-----|');
 
     const source = createSource().pipe(
       cache(t, undefined, rxTestScheduler),
