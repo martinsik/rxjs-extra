@@ -4,7 +4,16 @@ Complete rewrite that supports RxJS 6 and pipable operators.
 
 **Features**
 
+- **delayComplete** - Operator added.
+- **errorWhen** - Operator added.
 - **finalizeWithReason** - Operator added.
+- **randomDelay** - Operator added.
+- **retryTime** - Operator added.
+- **takeUntilComplete** - Operator added.
+- **tapSubscribe** - Operator added.
+- **presetTimer** - Observable creation method added.
+- **randomTimer** - Observable creation method added.
+- **DebugObserver** - Observer added.
 
 **Breaking changes**
 
