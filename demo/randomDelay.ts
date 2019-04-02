@@ -15,3 +15,4 @@ $ npm run demo -- demo/randomDelay.ts
 2
 3
 4
+*/

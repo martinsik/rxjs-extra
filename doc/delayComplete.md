@@ -1,4 +1,6 @@
-### delayComplete
+# delayComplete
+
+*operator*
 
 Just like `delay()` but delays only the `complete` notification.
 
@@ -10,7 +12,7 @@ delayComplete(time: number, scheduler?: SchedulerLike)
 
 ```
 import { of } from 'rxjs';
-import { delayComplete } from '../src/operators';
+import { delayComplete } from 'rxjs-extra/operators';
 
 const start = new Date().getTime();
 const now = () => new Date().getTime() - start;

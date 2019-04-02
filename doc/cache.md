@@ -1,4 +1,6 @@
-### cache
+# cache
+
+*operator*
 
 Operator that stores and replays its cached value for a period of time.
 
