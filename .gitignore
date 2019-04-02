@@ -9,9 +9,6 @@ node_modules
 # Optional npm cache directory
 .npm
 
-.rxjs-spec
-tmp
-test-js
 test/helpers/*
 !test/helpers/README.md
 dist

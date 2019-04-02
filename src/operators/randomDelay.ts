@@ -1,9 +1,10 @@
 import { of, MonoTypeOperatorFunction, SchedulerLike } from 'rxjs';
 import { concatMap, delay } from 'rxjs/operators';
 
-import { NumberGenerator, randomNumberGenerator } from '..';
+import { NumberGenerator, randomNumberGenerator } from '../utils/numberGenerator';
 
 /**
+ * Mirrors the source Observable but makes random delays between values.
  *
  * @param min number
  * @param max number

@@ -9,6 +9,7 @@
     "clean_dist": "rm -rf dist",
     "clean_cjs": "rm -rf dist/cjs",
     "clean_es5": "rm -rf dist/es5",
+    "clean_package": "rm -rf dist/package",
     "clean_types": "rm -rf dist/typings",
     "clean_tests2png": "rm -rf docs_app",
     "clean_rxjs_repo": "rm -rf .rxjs-repo",
@@ -72,11 +73,11 @@
     "symbol-observable": "^1.0.4",
     "ts-node": "^8.0.2",
     "tslint": "^5.11.0",
-    "typescript": "^2.9.2",
+    "typescript": "^3.4.1",
     "webpack": "^2.4.1"
   },
   "peerDependencies": {
     "rxjs": "^6.0.0"
   },
-  "typings": "./dist/package/RxJS-Extra.d.ts"
+  "typings": "index.d.ts"
 }

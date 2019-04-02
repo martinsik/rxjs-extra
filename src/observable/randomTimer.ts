@@ -1,6 +1,6 @@
 import { Observable, SchedulerLike, defer, of, asyncScheduler } from 'rxjs';
 import { delay, take, repeat, concatMap } from 'rxjs/operators';
-import { NumberGenerator, randomNumberGenerator } from '..';
+import { NumberGenerator, randomNumberGenerator } from '../utils/numberGenerator';
 
 /**
  * Creates an Observable that emits sequential numbers in random intervals on a specified scheduler.

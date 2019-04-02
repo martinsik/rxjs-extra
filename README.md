@@ -30,7 +30,7 @@ Observable.range(1, 3)
   .subscribe(console.log);
 ```
 
-In ES6 in `node` environment for example:
+In `node` environment for example:
 
 ```
 const Observable = require('rxjs/Observable').Observable;
@@ -159,7 +159,7 @@ To run the test suit simply run the following `npm` script:
 $ npm run test
 ```
 
-This repository also uses the same marble to png generator as the originial RxJS repo. Since this isn't an officially exported feature of RxJS the process is a little more complicated but fully automatic by running:
+This repository also uses the same marble to png generator as the original RxJS repo. Since this isn't an officially exported feature of RxJS the process is a little more complicated but fully automatic by running:
 
 ```
 $ npm run tests2png_full
