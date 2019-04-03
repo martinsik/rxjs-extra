@@ -1,26 +1,25 @@
-import { Subject, Subscriber, Subscription, SubscriptionLike } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { localPersistentStorage, PersistentStorage } from '../utils/storage';
 
-export class PersistentSubject<T> extends Subject<T> {
-  private value: T;
+/**
+ * Just like `BehaviorSubject` but stores every item in a persistent storage (by default `LocalStorage`).
+ */
+export class PersistentSubject<T> extends BehaviorSubject<T> {
+  private storageKey: string;
+  private storage: PersistentStorage<T>;
 
-  constructor(private storageKey: string, defaultValue: T, private storage: PersistentStorage<T> = localPersistentStorage) {
-    super();
+  constructor(storageKey: string, defaultValue: T, storage: PersistentStorage<T> = localPersistentStorage) {
+    const stored = storage.getItem(storageKey);
+    const value = stored ? stored : defaultValue;
 
-    const stored = storage.getItem(this.storageKey);
-    this.value = stored ? stored : defaultValue;
-  }
+    super(value);
 
-  _subscribe(subscriber: Subscriber<T>): Subscription {
-    const subscription = super._subscribe(subscriber);
-    if (subscription && !(<SubscriptionLike>subscription).closed) {
-      subscriber.next(this.value);
-    }
-    return subscription;
+    this.storage = storage;
+    this.storageKey = storageKey;
   }
 
   next(value: T): void {
     this.storage.setItem(this.storageKey, value);
-    super.next(this.value = value);
+    super.next(value);
   }
 }

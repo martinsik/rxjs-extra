@@ -1,5 +1,7 @@
 # DebugObserver
 
+*Observer*
+
 Observer for debugging purposes that timestamps each notification with time offset since the instance was created.
 
 ```
@@ -31,3 +33,5 @@ presetTimer([500, 1000, 2000])
 [MyObs]C@   3523:
 */
 ```
+
+Demo: [`demo/DebugObserver.ts`](https://github.com/martinsik/rxjs-extra/blob/master/demo/DebugObserver.ts)

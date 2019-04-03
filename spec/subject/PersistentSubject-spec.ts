@@ -1,9 +1,9 @@
 import { expect } from 'chai';
 
 import { PersistentSubject } from '../../src';
-import { mockStorage, MOCK_DEFAULT_KEY, MOCK_DEFAULT_VALUE } from '../../src/spec/MockPersistentStorage';
+import { mockStorage, MOCK_DEFAULT_KEY, MOCK_DEFAULT_VALUE } from '../../src/mock/MockPersistentStorage';
 
-describe.only('PersistentSubject', () => {
+describe('PersistentSubject', () => {
   it('should use the default value when there\'s no storaged value', () => {
     const s = new PersistentSubject('non-existent-key', MOCK_DEFAULT_VALUE, mockStorage);
 
