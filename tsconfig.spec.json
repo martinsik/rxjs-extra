@@ -1,6 +1,8 @@
 {
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
+    "noUnusedParameters": false,
+    "noUnusedLocals": false,
     "module": "commonjs",
     "target": "es5"
   }
