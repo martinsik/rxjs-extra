@@ -14,6 +14,7 @@ Complete rewrite that supports RxJS 6 and pipable operators.
 - **presetTimer** - Observable creation method added.
 - **randomTimer** - Observable creation method added.
 - **DebugObserver** - Observer added.
+- **PersistentSubject** - Subject added.
 
 **Breaking changes**
 

@@ -4,7 +4,7 @@
 
 Collection of extra RxJS 6 operators, Observable creation methods and observers for common use-cases.
 
-## List of features
+## List of Features
 
 **Operators**
 
@@ -26,6 +26,10 @@ Collection of extra RxJS 6 operators, Observable creation methods and observers 
 **Observers**
 
  - [`DebugObserver`](https://github.com/martinsik/rxjs-extra/blob/master/doc/DebugObserver.md) - Observer for debugging purposes that timestamps each notification with time offset since the instance was created.
+
+**Subjects**
+
+ - [`PersistentSubject`](https://github.com/martinsik/rxjs-extra/blob/master/doc/PersistentSubject.md) - Just like `BehaviorSubject` but stores every item in a persistent storage (`LocalStorage` by default).
 
 ## Usage
 

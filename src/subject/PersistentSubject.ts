@@ -2,7 +2,7 @@ import { BehaviorSubject } from 'rxjs';
 import { localPersistentStorage, PersistentStorage } from '../utils/storage';
 
 /**
- * Just like `BehaviorSubject` but stores every item in a persistent storage (by default `LocalStorage`).
+ * Just like `BehaviorSubject` but stores every item in a persistent storage (`LocalStorage` by default).
  */
 export class PersistentSubject<T> extends BehaviorSubject<T> {
   private storageKey: string;
