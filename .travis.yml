@@ -6,13 +6,15 @@ cache:
     - node_modules
 
 node_js:
-  - "node"
-  - "6"
-  - "5"
-  - "4"
+  - node
+  - 10
+  - 9
+  - 8
+  - 7
+  - 6
 
 install:
-  - npm install
+  - npm i
   - node -v
   - npm -v
-  - npm run spec_setup && npm run test_build_cjs_run
+  - npm run test_full

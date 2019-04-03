@@ -1,8 +1,9 @@
 {
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
+    "noUnusedParameters": false,
+    "noUnusedLocals": false,
     "module": "commonjs",
-    "target": "es5",
-    "outDir": "./dist/cjs"
+    "target": "es5"
   }
 }

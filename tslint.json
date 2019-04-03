@@ -57,7 +57,8 @@
       "check-operator",
       "check-separator",
       "check-type"
-    ]
+    ],
+    "no-unused-expression": true
   },
   "jsRules": true
 }
