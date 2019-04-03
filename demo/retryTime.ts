@@ -8,7 +8,7 @@ let retries = 0;
 
 defer(() => {
   if (retries++ === 3) {
-    return of(1)
+    return of(1);
   } else {
     console.log('throw');
     return throwError('Error');

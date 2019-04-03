@@ -3,7 +3,7 @@ import { TestScheduler } from 'rxjs/testing';
 import { tap } from 'rxjs/operators';
 
 import { hot, cold, time, expectObservable } from '../marble-testing';
-import { DebugObserver } from "../../src";
+import { DebugObserver } from '../../src';
 
 declare const rxTestScheduler: TestScheduler;
 
@@ -16,7 +16,7 @@ describe('DebugObserver', () => {
   beforeEach(() => {
     logs = [];
   });
-  
+
   it('should subscribe to all notifications and make timestamped logs', () => {
     const e1 = cold('-a---b-c--(d|)');
     e1.subscribe(new DebugObserver('MyObs', logger, rxTestScheduler));

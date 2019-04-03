@@ -58,7 +58,6 @@
       "check-separator",
       "check-type"
     ],
-    "no-unused-variable": true,
     "no-unused-expression": true
   },
   "jsRules": true

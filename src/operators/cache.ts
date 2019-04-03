@@ -38,7 +38,7 @@ export function cache<T>(windowTime: number, mode: CacheMode = CacheMode.Default
           // the second item always needs to be the last one
           return false;
         }, true),
-        filter((item, i) => i === 0), // always pass only the first item
+        filter((_, i) => i === 0), // always pass only the first item
         map<Timestamp<T>, T>((item) => item.value),
       );
 

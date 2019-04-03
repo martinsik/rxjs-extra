@@ -1,5 +1,5 @@
-import { Subscriber, SchedulerLike } from "rxjs";
-import { schedulerNow } from "../utils/now";
+import { Subscriber, SchedulerLike } from 'rxjs';
+import { schedulerNow } from '../utils/now';
 
 /**
  * Observer for debugging purposes that timestamps each notification with time offset since the instance was created.

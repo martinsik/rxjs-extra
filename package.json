@@ -15,6 +15,7 @@
     "clean_rxjs_repo": "rm -rf .rxjs-repo",
     "bundle_es5": "npm run build_es5 && rollup -c && npm run closure_compile_es5",
     "closure_compile_es5": "mkdir -p dist/es5/bundles && node tools/run-closure-compiler.js",
+    "build": "npm run build_es5 && npm run build_cjs && npm run build_types",
     "build_es5": "npm run clean_es5 && tsc -p tsconfig.es5.json",
     "build_cjs": "npm run clean_cjs && tsc -p tsconfig.cjs.json",
     "build_types": "npm run clean_types && tsc -p tsconfig.types.json",

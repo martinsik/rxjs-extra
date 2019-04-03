@@ -1,4 +1,4 @@
-import { Observable, SchedulerLike, range, of, asyncScheduler } from 'rxjs';
+import { Observable, SchedulerLike, range, of } from 'rxjs';
 import { delay, concatMap } from 'rxjs/operators';
 
 /**
