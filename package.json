@@ -1,7 +1,7 @@
 {
   "name": "rxjs-extra",
-  "version": "2.0.0",
-  "description": "Collection of extra operators for RxJS 5",
+  "version": "2.0.1",
+  "description": "Collection of extra RxJS 6 operators, Observable creation methods, Observers and Subjects for common use-cases.",
   "main": "index.js",
   "sideEffects": false,
   "scripts": {

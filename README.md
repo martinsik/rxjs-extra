@@ -2,7 +2,7 @@
 
 # RxJS Extra
 
-Collection of extra RxJS 6 operators, Observable creation methods and observers for common use-cases.
+Collection of extra RxJS 6 operators, Observable creation methods, Observers and Subjects for common use-cases.
 
 ## List of Features
 
