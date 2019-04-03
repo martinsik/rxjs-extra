@@ -1,10 +1,10 @@
 import { Subject, Subscriber, Subscription, SubscriptionLike } from 'rxjs';
 import { localPersistentStorage, PersistentStorage } from '../utils/storage';
 
-class PersistentSubject<T> extends Subject<T> {
+export class PersistentSubject<T> extends Subject<T> {
   private value: T;
 
-  constructor(private storageKey: string, private storage: PersistentStorage<T> = localPersistentStorage, defaultValue: T) {
+  constructor(private storageKey: string, defaultValue: T, private storage: PersistentStorage<T> = localPersistentStorage) {
     super();
 
     const stored = storage.getItem(this.storageKey);
