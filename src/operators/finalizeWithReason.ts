@@ -8,6 +8,7 @@ export enum FinalizeReason {
 }
 
 /**
+ * @todo(): Review when https://github.com/ReactiveX/rxjs/issues/2823 is resolved.
  * Just like `finalize()` but passes to its callback also `reason` why the chain is being
  * disposed (chain completed, errored or on unsubscription).
  *
