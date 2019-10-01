@@ -4,7 +4,7 @@ export const MOCK_DEFAULT_KEY = 'mock-key';
 export const MOCK_DEFAULT_VALUE = 'default-value';
 
 class MockPersistentStorage implements PersistentStorage<any> {
-  private storate: { [key: string]: any } = {};
+  private storate: Record<string, any> = {};
 
   constructor(storateStorage: any = {}) {
     this.storate = storateStorage;
