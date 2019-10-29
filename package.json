@@ -63,7 +63,7 @@
     "escape-string-regexp": "^1.0.5",
     "gm": "^1.23.0",
     "google-closure-compiler-js": "^20170521.0.0",
-    "lodash": "^4.17.4",
+    "lodash": "^4.17.15",
     "mocha": "^5.2.0",
     "normalize-newline-cli": "^1.1.0",
     "rollup": "^0.41.6",
