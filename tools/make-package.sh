@@ -12,7 +12,7 @@ cp README.md dist/package
 cp CHANGELOG.md dist/package
 cp LICENSE dist/package
 cp package.json dist/package
-cp -R dist/cjs/ dist/package
-cp -R dist/typings/ dist/package
+cp -R dist/cjs/* dist/package
+cp -R dist/typings/* dist/package
 cp -R dist/es5/bundles dist/package/bundles
 cp -R src/ dist/package/src
