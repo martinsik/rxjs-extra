@@ -14,6 +14,7 @@ Collection of extra RxJS 6 operators, Observable creation methods, Observers and
  - [`finalizeWithReason`](https://github.com/martinsik/rxjs-extra/blob/master/doc/finalizeWithReason.md) - Just like `finalize()` but passes to its callback also `reason` why the chain is being disposed.
  - [`queueTime`](https://github.com/martinsik/rxjs-extra/blob/master/doc/queueTime.md) - Mirrors the source Observable and makes at most `timeDelay` delay between two emissions to keep at least `timeDelay` intervals while re-emitting source asap.
  - [`randomDelay`](https://github.com/martinsik/rxjs-extra/blob/master/doc/randomDelay.md) - Mirrors the source Observable but makes random delays between emissions on a specified scheduler.
+ - [`resetTime`](https://github.com/martinsik/rxjs-extra/blob/master/doc/resetTime.md) - Mirrors source Observable and schedules another delayed emission after every `next` emission from source (useful for showing/hiding notifications in UI).
  - [`retryTime`](https://github.com/martinsik/rxjs-extra/blob/master/doc/retryTime.md) - Just like `retry()` but resubscribes to its source Observable with constant delays or resubscribes only `N` times based on a predefined array of delays.
  - [`takeUntilComplete`](https://github.com/martinsik/rxjs-extra/blob/master/doc/takeUntilComplete.md) - Just like `takeUntil()` but completes only when the notifier completes and ignores all `next` notifications.
  - [`tapSubscribe`](https://github.com/martinsik/rxjs-extra/blob/master/doc/tapSubscribe.md) - Triggers callback every time a new observer subscribes to this chain.
@@ -77,6 +78,8 @@ $ npm run demo -- demo/delayComplete.ts
 
 # Testing
 
+## OS X and Linux systems
+
 This repository tests are based completely on RxJS marble tests and its helpers. You'll have to clone the original RxJS repo because tests in this repo rely on tools available only in the official RxJS 6 repo.
                                                                                 
 ```
@@ -89,7 +92,11 @@ To run the test suit simply run the following `npm` script:
 $ npm run test
 ```
 
-This repository also uses the same marble2png generator as the original RxJS repo. Since this isn't an officially exported feature of RxJS 6 the process is a little more complicated but fully automatic by running a single script:
+This repository also uses the same `marble2png` generator as the original RxJS repo. Since this isn't an officially exported feature of RxJS 6 the process is a little more complicated but fully automatic by running a single script:
+
+### Generating marble diagrams
+
+First, install ImageMagick or GraphicsMagick. Then run the following command:
 
 ```
 $ npm run tests2png_full
@@ -113,3 +120,28 @@ If you know you're about to run the png generator a lot you can just clone the R
 $ npm run clone_rxjs_repo
 $ npm run tests2png
  ```
+
+## Windows
+
+On Windows the process is a little more complicated because `gm` npm package won't be able to find the `convert` command so you'll have to manually make changes to the cloned `.rxjs-repo/spec/helpers/tests2png/painter.ts`.
+
+The following process might be slightly different between ImageMagick and GraphicsMagick.
+
+1. Set ImageMagick/GraphicsMagick `convert.exe` path.
+
+   ```
+   // When using ImageMagick (including portable ImageMagick)
+   const gmCmd = gm.subClass({appPath: 'path to your ImageMagick dir', imageMagick: true});
+   ```
+
+   Then almost at the end of the file use `gmCmd` instead of the default `gm`:
+
+   ```
+   let out: GMObject = gmCmd(CANVAS_WIDTH, canvasHeight, '#ffffff');
+   ```
+
+2. Set `helvetica` font path.
+
+   ImageMagick/GraphicsMagick might not be able to find `helvetica` font on your system. So download `helvetica.ttf` font from any site you like. Then in `.rxjs-repo/spec/helpers/tests2png/painter.ts` search for `out.font('helvetica'` and replace it the font name with path to the file you downloaded.
+
+

@@ -6,4 +6,5 @@ export * from './queueTime';
 export * from './takeUntilComplete';
 export * from './tapSubscribe';
 export * from './randomDelay';
+export * from './resetTime';
 export * from './retryTime';
