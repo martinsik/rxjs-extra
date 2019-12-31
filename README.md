@@ -10,6 +10,7 @@ Collection of extra RxJS 6 operators, Observable creation methods, Observers and
 
  - [`cache`](https://github.com/martinsik/rxjs-extra/blob/master/doc/cache.md) - Caches the source Observable values for a time period with three different caching strategies.
  - [`delayComplete`](https://github.com/martinsik/rxjs-extra/blob/master/doc/delayComplete.md) - Just like `delay()` but delays only the `complete` notification.
+ - [`distinctTime`](https://github.com/martinsik/rxjs-extra/blob/master/doc/distinctTime.md) - Just like `distinct` operator but periodically resets after a set time span.
  - [`errorWhen`](https://github.com/martinsik/rxjs-extra/blob/master/doc/errorWhen.md) - Emits an `error` notification when a value matches the predicate function.
  - [`finalizeWithReason`](https://github.com/martinsik/rxjs-extra/blob/master/doc/finalizeWithReason.md) - Just like `finalize()` but passes to its callback also `reason` why the chain is being disposed.
  - [`queueTime`](https://github.com/martinsik/rxjs-extra/blob/master/doc/queueTime.md) - Mirrors the source Observable and makes at most `timeDelay` delay between two emissions to keep at least `timeDelay` intervals while re-emitting source asap.

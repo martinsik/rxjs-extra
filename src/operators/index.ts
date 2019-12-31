@@ -1,5 +1,6 @@
 export * from './cache';
 export * from './delayComplete';
+export * from './distinctTime';
 export * from './errorWhen';
 export * from './finalizeWithReason';
 export * from './queueTime';
