@@ -122,7 +122,7 @@ $ npm run clone_rxjs_repo
 $ npm run tests2png
  ```
 
-## Windows
+#### Windows
 
 On Windows the process is a little more complicated because `gm` npm package won't be able to find the `convert` command so you'll have to manually make changes to the cloned `.rxjs-repo/spec/helpers/tests2png/painter.ts`.
 
